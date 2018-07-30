@@ -22,5 +22,5 @@ function callApi(endpoint) {
 }
 
 // api services
-export const listProperties = () => callApi('property_listings');
-export const geoAutocomplete = () => callApi('geo_autocomplete');
+export const requestProperties = () => callApi('property_listings');
+export const requestGeoAutocomplete = () => callApi('geo_autocomplete');

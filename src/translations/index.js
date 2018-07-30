@@ -1,6 +1,7 @@
 export const translations = {
     "en": {
-        "Translate this text": "Traduce este texto",
-        "Hello {n}!": "Hola {n}!",
+        "min-price": "Min Price",
+        "min-beds": "Min Beds",
+        "submit": "Submit",
     }
 };

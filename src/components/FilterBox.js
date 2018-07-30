@@ -19,36 +19,43 @@ const styles = theme => ({
     },
 });
 
-
 const FilterBox = (props, context) => {
-    const {classes} = props;
+    const {classes, location, minPrice, minBeds, disabled, onSubmit} = props;
     return (
         <div>
             <form className={classes.container} noValidate autoComplete="off">
                 <Grid container spacing={8}>
                     <Grid item xs={4}>
                         <TextField fullWidth
+                                   error={false}
+                                   disabled={disabled}
                                    label={context.t("location")}
-                                   value=""
+                                   value={location}
                                    margin="normal"
                         />
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth
+                                   error={false}
+                                   disabled={disabled}
                                    label={context.t("min-price")}
-                                   value=""
+                                   value={minPrice}
+                                   type="number"
                                    margin="normal"
                         />
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth
+                                   error={false}
+                                   disabled={disabled}
                                    label={context.t("min-beds")}
-                                   value=""
+                                   value={minBeds}
+                                   type="number"
                                    margin="normal"
                         />
                     </Grid>
                     <Grid item xs>
-                        <Button variant="contained" color="primary" className={classes.button}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}>
                             {context.t("submit")}
                         </Button>
                     </Grid>

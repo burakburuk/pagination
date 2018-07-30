@@ -1,9 +1,11 @@
 import {combineReducers} from 'redux';
 import {i18nState} from "redux-i18n";
-import filterReducer from './filterReducer';
+import filterBoxReducer from './filterBoxReducer';
+import resultTableReducer from './resultTableReducer';
 
 const rootReducer = combineReducers({
-    filter: filterReducer,
+    filterBox: filterBoxReducer,
+    resultTable: resultTableReducer,
     i18nState
 });
 

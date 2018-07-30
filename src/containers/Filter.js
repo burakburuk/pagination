@@ -14,12 +14,16 @@ const styles = theme => ({
 });
 
 class Filter extends Component {
+    onSubmit = (e) => {
+        alert("Clicked!");
+    };
+
     render() {
-        const {classes, filterState} = this.props;
+        const {classes, filterBoxState, resultTableState} = this.props;
         return (
             <div className={classes.container}>
-                <FilterBox/>
-                <ResultTable {...filterState}/>
+                <FilterBox {...filterBoxState} onSubmit={this.onSubmit}/>
+                <ResultTable {...resultTableState}/>
             </div>
         );
     }
@@ -34,7 +38,8 @@ Filter.contextTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    filterState: state.filter
+    filterBoxState: state.filterBox,
+    resultTableState: state.resultTable
 });
 
 const mapDispatchToProps = (dispatch) => ({});

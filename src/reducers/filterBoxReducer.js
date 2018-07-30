@@ -1,6 +1,6 @@
 import {updateObject, createReducer} from './reducerUtilities';
 
 // Slice reducer
-const filterReducer = createReducer([], {});
+const filterBoxReducer = createReducer([], {});
 
-export default filterReducer;
+export default filterBoxReducer;

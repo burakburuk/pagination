@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import I18n from "redux-i18n";
 import {setLanguage} from "redux-i18n"
 import {translations} from "../translations";
-import FilterBox from '../components/FilterBox';
+import Filter from './Filter';
 import '../assets/App.css';
 
 class App extends Component {
@@ -18,9 +18,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <I18n translations={translations}>
-                    <div>
-                        <FilterBox/>
-                    </div>
+                    <Filter/>
                 </I18n>
             </Provider>
         );

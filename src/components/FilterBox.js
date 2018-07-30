@@ -9,9 +9,13 @@ const styles = theme => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
+        margin: theme.spacing.unit * 3,
     },
     button: {
         marginTop: 27,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        display: 'flex',
     },
 });
 
@@ -23,22 +27,27 @@ const FilterBox = (props, context) => {
             <form className={classes.container} noValidate autoComplete="off">
                 <Grid container spacing={8}>
                     <Grid item xs={4}>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <TextField
-                            label={context.t("min-price")}
-                            value=""
-                            margin="normal"
+                        <TextField fullWidth
+                                   label={context.t("location")}
+                                   value=""
+                                   margin="normal"
                         />
                     </Grid>
                     <Grid item xs={3}>
-                        <TextField
-                            label={context.t("min-beds")}
-                            value=""
-                            margin="normal"
+                        <TextField fullWidth
+                                   label={context.t("min-price")}
+                                   value=""
+                                   margin="normal"
                         />
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
+                        <TextField fullWidth
+                                   label={context.t("min-beds")}
+                                   value=""
+                                   margin="normal"
+                        />
+                    </Grid>
+                    <Grid item xs>
                         <Button variant="contained" color="primary" className={classes.button}>
                             {context.t("submit")}
                         </Button>

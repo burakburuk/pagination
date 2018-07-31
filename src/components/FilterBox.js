@@ -65,12 +65,19 @@ const FilterBox = (props, context) => {
     );
 };
 
+FilterBox.defaultProps = {
+    onSubmit: () => {
+        throw new Error("onSubmit is not implemented!");
+    }
+};
+
 FilterBox.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
 FilterBox.propTypes = {
     classes: PropTypes.object.isRequired,
+    onSubmit: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(FilterBox);

@@ -69,12 +69,23 @@ const ResultTable = (props, context) => {
     );
 };
 
+ResultTable.defaultProps = {
+    handleChangePage: () => {
+        throw new Error("handleChangePage is not implemented!");
+    },
+    handleChangeRowsPerPage: () => {
+        throw new Error("handleChangeRowsPerPage is not implemented!");
+    }
+};
+
 ResultTable.contextTypes = {
     t: PropTypes.func.isRequired
 };
 
 ResultTable.propTypes = {
     classes: PropTypes.object.isRequired,
+    handleChangePage: PropTypes.func.isRequired,
+    handleChangeRowsPerPage: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(ResultTable);

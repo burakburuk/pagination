@@ -1,50 +1,36 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {withStyles} from '@material-ui/core/styles';
 import FilterBox from '../components/FilterBox';
-import ResultTable from '../components/ResultTable';
-
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        margin: theme.spacing.unit * 3,
-    },
-});
+import {requestListProperties} from '../actions';
 
 class Filter extends Component {
     onSubmit = (e) => {
-        alert("Clicked!");
+        const filter = ["area=Oxford"];
+        this.props.requestListProperties(filter);
     };
 
     render() {
-        const {classes, filterBoxState, resultTableState} = this.props;
+        const {filterBoxState} = this.props;
         return (
-            <div className={classes.container}>
-                <FilterBox {...filterBoxState} onSubmit={this.onSubmit}/>
-                <ResultTable {...resultTableState}/>
-            </div>
+            <FilterBox {...filterBoxState} onSubmit={this.onSubmit}/>
         );
     }
 }
-
-Filter.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 Filter.contextTypes = {
     t: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-    filterBoxState: state.filterBox,
-    resultTableState: state.resultTable
+    filterBoxState: state.filterBox
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+    requestListProperties: (filter) => dispatch(requestListProperties(filter))
+});
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withStyles(styles)(Filter));
+)(Filter);

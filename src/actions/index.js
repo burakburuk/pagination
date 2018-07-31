@@ -1,9 +1,10 @@
 import * as actionTypes from "../constants";
 
-const requestGeoAutoComplete = () => {
+export const requestGeoAutoComplete = () => ({
     type: actionTypes.HANDLE_GEO_AUTO_COMPLETE_REQUEST
-};
+});
 
-const requestListProperties = () => {
-    type: actionTypes.HANDLE_LIST_PROPERTIES_REQUEST
-};
+export const requestListProperties = (filter) => ({
+    type: actionTypes.HANDLE_LIST_PROPERTIES_REQUEST,
+    filter
+});

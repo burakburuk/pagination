@@ -1,11 +1,22 @@
 const API_ROOT = 'https://api.zoopla.co.uk/api/v1/';
-const API_KEY = '898x2tnpnkpx8gawk987p39a';
+const API_KEY = 'r5rvh7etdx2wvzrrxdy5jnyk';
+
+function createParams(params = []) {
+    let result = params.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue + "&"
+    }, "?");
+
+    return result;
+}
 
 // Fetches an API response and returns a promise
-function callApi(endpoint) {
+function callApi(endpoint, params) {
     let fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
 
-    return fetch(fullUrl + `?api_key=${API_KEY}`)
+    const parameters = createParams(params);
+    return fetch(fullUrl + parameters + `api_key=${API_KEY}`, {
+        mode: 'no-cors'
+    })
         .then(response =>
             response.json().then(json => ({json, response}))
         ).then(({json, response}) => {
@@ -22,5 +33,5 @@ function callApi(endpoint) {
 }
 
 // api services
-export const requestProperties = () => callApi('property_listings');
-export const requestGeoAutocomplete = () => callApi('geo_autocomplete');
+export const requestProperties = (params) => callApi('property_listings', params);
+export const requestGeoAutoComplete = () => callApi('geo_autocomplete');

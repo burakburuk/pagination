@@ -22,7 +22,7 @@ export function* watchListPropertiesRequest() {
 
 function* requestGeoAutoComplete(action) {
     try {
-        const {response, error} = yield call(() => api.requestGeoAutocomplete());
+        const {response, error} = yield call(() => api.requestGeoAutoComplete());
         if (error) {
             throw new Error(error);
         } else {
@@ -37,7 +37,7 @@ function* requestGeoAutoComplete(action) {
 
 function* requestListProperties(action) {
     try {
-        const {response, error} = yield call(() => api.requestProperties());
+        const {response, error} = yield call(() => api.requestProperties(action.filter));
         if (error) {
             throw new Error(error);
         } else {

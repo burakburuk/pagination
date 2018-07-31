@@ -1,6 +1,7 @@
 import {takeEvery, call, put} from "redux-saga/effects";
 import * as actionTypes from "../constants";
 import * as api from '../services';
+import {requestListPropertiesComplete} from '../actions';
 
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
@@ -41,7 +42,7 @@ function* requestListProperties(action) {
         if (error) {
             throw new Error(error);
         } else {
-            console.dir(response)
+            yield put(requestListPropertiesComplete(response));
         }
     }
     catch

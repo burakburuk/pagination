@@ -45,12 +45,12 @@ const ResultTable = (props, context) => {
                     <TableBody>
                         {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                             return (
-                                <TableRow key={n.id}>
-                                    <TableCell component="th" scope="row">
-                                        {n.name}
-                                    </TableCell>
-                                    <TableCell numeric>{n.calories}</TableCell>
-                                    <TableCell numeric>{n.fat}</TableCell>
+                                <TableRow key={n.listingId}>
+                                    <TableCell numeric>{n.listingId}</TableCell>
+                                    <TableCell numeric>{n.price}</TableCell>
+                                    <TableCell numeric>{n.bedrooms}</TableCell>
+                                    <TableCell>{n.propertyType}</TableCell>
+                                    <TableCell>{n.agentName}</TableCell>
                                 </TableRow>
                             );
                         })}

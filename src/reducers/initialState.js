@@ -1,8 +1,8 @@
 const initialState = {
     filterBox: {
         location: "",
-        minPrice: 0,
-        minBeds: 0,
+        minPrice: "",
+        minBeds: "",
         disabled: false,
     },
     resultTable: {

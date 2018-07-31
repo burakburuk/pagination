@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import FilterBox from '../components/FilterBox';
-import {requestListProperties} from '../actions';
+import {requestListProperties, onFilterFormFieldsChange} from '../actions';
 
 class Filter extends Component {
     onSubmit = (e) => {
@@ -10,10 +10,14 @@ class Filter extends Component {
         this.props.requestListProperties(filter);
     };
 
+    handleFieldChange = (field) => {
+        this.props.onFilterFormFieldsChange(field);
+    };
+
     render() {
         const {filterBoxState} = this.props;
         return (
-            <FilterBox {...filterBoxState} onSubmit={this.onSubmit}/>
+            <FilterBox {...filterBoxState} onSubmit={this.onSubmit} handleFieldChange={this.handleFieldChange}/>
         );
     }
 }
@@ -27,7 +31,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    requestListProperties: (filter) => dispatch(requestListProperties(filter))
+    requestListProperties: (filter) => dispatch(requestListProperties(filter)),
+    onFilterFormFieldsChange: (field) => dispatch(onFilterFormFieldsChange(field)),
 });
 
 export default connect(

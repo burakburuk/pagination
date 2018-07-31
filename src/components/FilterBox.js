@@ -20,7 +20,7 @@ const styles = theme => ({
 });
 
 const FilterBox = (props, context) => {
-    const {classes, location, minPrice, minBeds, disabled, onSubmit} = props;
+    const {classes, location, minPrice, minBeds, disabled, onSubmit, handleFieldChange} = props;
     return (
         <div>
             <form className={classes.container} noValidate autoComplete="off">
@@ -42,6 +42,7 @@ const FilterBox = (props, context) => {
                                    value={minPrice}
                                    type="number"
                                    margin="normal"
+                                   onChange={(e) => handleFieldChange({"minPrice": e.target.value})}
                         />
                     </Grid>
                     <Grid item xs={3}>
@@ -52,6 +53,7 @@ const FilterBox = (props, context) => {
                                    value={minBeds}
                                    type="number"
                                    margin="normal"
+                                   onChange={(e) => handleFieldChange({"minBeds": e.target.value})}
                         />
                     </Grid>
                     <Grid item xs>

@@ -8,3 +8,8 @@ export const requestListProperties = (filter) => ({
     type: actionTypes.HANDLE_LIST_PROPERTIES_REQUEST,
     filter
 });
+
+export const onFilterFormFieldsChange = (field) => ({
+    type: actionTypes.ON_FILTER_FORM_FIELDS_CHANGE,
+    field
+});

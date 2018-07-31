@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
@@ -32,6 +33,15 @@ const ResultTable = (props, context) => {
         <Paper className={classes.root}>
             <div className={classes.tableWrapper}>
                 <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Listing id</TableCell>
+                            <TableCell numeric>Price</TableCell>
+                            <TableCell numeric>Bedrooms</TableCell>
+                            <TableCell>Property Type</TableCell>
+                            <TableCell>Agent Name</TableCell>
+                        </TableRow>
+                    </TableHead>
                     <TableBody>
                         {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                             return (

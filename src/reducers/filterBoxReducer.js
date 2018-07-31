@@ -16,10 +16,18 @@ const filterFormFieldsError = (filterState, action) => {
     };
 };
 
+const handleListPropertiesRequest = (filterState, action) => {
+    return {
+        ...filterState,
+        disabled: action.disabled
+    };
+};
+
 // Slice reducer
 const filterBoxReducer = createReducer([], {
     'ON_FILTER_FORM_FIELDS_CHANGE': onFilterFormFieldChange,
     'FILTER_FORM_FIELDS_ERROR': filterFormFieldsError,
+    'HANDLE_LIST_PROPERTIES_REQUEST': handleListPropertiesRequest
 });
 
 export default filterBoxReducer;

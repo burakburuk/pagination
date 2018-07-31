@@ -64,7 +64,8 @@ const FilterBox = (props, context) => {
                         />
                     </Grid>
                     <Grid item xs>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}
+                                disabled={disabled}>
                             {context.t("submit")}
                         </Button>
                     </Grid>

@@ -6,7 +6,7 @@ export const requestGeoAutoComplete = () => ({
 
 export const requestListProperties = (filter) => ({
     type: actionTypes.HANDLE_LIST_PROPERTIES_REQUEST,
-    filter
+    filter, disabled: true
 });
 
 export const onFilterFormFieldsChange = (field) => ({

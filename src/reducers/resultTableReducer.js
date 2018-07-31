@@ -1,6 +1,6 @@
 import {updateObject, createReducer} from './reducerUtilities';
 
-const listPropertiesRequestComplete = (filterState, action) => {
+const updatePropertiesTable = (filterState, action) => {
     return {
         ...filterState,
         ...action
@@ -9,7 +9,7 @@ const listPropertiesRequestComplete = (filterState, action) => {
 
 // Slice reducer
 const resultTableReducer = createReducer([], {
-    'LIST_PROPERTIES_REQUEST_COMPLETE': listPropertiesRequestComplete,
+    'UPDATE_PROPERTIES_TABLE': updatePropertiesTable,
 });
 
 export default resultTableReducer;

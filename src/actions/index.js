@@ -9,9 +9,14 @@ export const requestListProperties = (filter) => ({
     filter, disabled: true
 });
 
-export const requestListPropertiesComplete = (data) => ({
+export const requestListPropertiesComplete = () => ({
     type: actionTypes.LIST_PROPERTIES_REQUEST_COMPLETE,
-    data, disabled: false
+    disabled: false
+});
+
+export const updatePropertiesTable = (data) => ({
+    type: actionTypes.UPDATE_PROPERTIES_TABLE,
+    data
 });
 
 export const onFilterFormFieldsChange = (field) => ({

@@ -2,15 +2,31 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import FilterBox from '../components/FilterBox';
-import {requestListProperties, onFilterFormFieldsChange} from '../actions';
+import {requestListProperties, onFilterFormFieldsChange, filterFieldsError} from '../actions';
 
 class Filter extends Component {
     onSubmit = (e) => {
-        const filter = ["area=Oxford"];
-        this.props.requestListProperties(filter);
+        const {filterBoxState} = this.props;
+        const errorObj = {
+            "locationError": (filterBoxState.location === ""),
+            "minPriceError": (filterBoxState.minPrice === ""),
+            "minBedsError": (filterBoxState.minBeds === "")
+        };
+        for (let key in errorObj) {
+            if (errorObj[key]) {
+                return this.props.filterFieldsError(errorObj);
+            }
+        }
+        this.props.requestListProperties([
+            `area=${filterBoxState.location}`,
+            `minPrice=${filterBoxState.minPrice}`,
+            `minBeds=${filterBoxState.minBeds}`
+        ]);
     };
 
     handleFieldChange = (field) => {
+        field[field.property + "Error"] = (field.value === "");
+        field[field.property] = field.value;
         this.props.onFilterFormFieldsChange(field);
     };
 
@@ -33,6 +49,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     requestListProperties: (filter) => dispatch(requestListProperties(filter)),
     onFilterFormFieldsChange: (field) => dispatch(onFilterFormFieldsChange(field)),
+    filterFieldsError: (errors) => dispatch(filterFieldsError(errors)),
 });
 
 export default connect(

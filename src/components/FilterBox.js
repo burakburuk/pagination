@@ -20,40 +20,47 @@ const styles = theme => ({
 });
 
 const FilterBox = (props, context) => {
-    const {classes, location, minPrice, minBeds, disabled, onSubmit, handleFieldChange} = props;
+    const {classes, location, locationError, minPrice, minPriceError, minBeds, minBedsError, disabled, onSubmit, handleFieldChange} = props;
     return (
         <div>
             <form className={classes.container} noValidate autoComplete="off">
                 <Grid container spacing={8}>
                     <Grid item xs={4}>
                         <TextField fullWidth
-                                   error={false}
+                                   error={locationError}
                                    disabled={disabled}
                                    label={context.t("location")}
                                    value={location}
                                    margin="normal"
+                                   onChange={(e) => handleFieldChange({
+                                       "property": "location",
+                                       "value": e.target.value
+                                   })}
                         />
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth
-                                   error={false}
+                                   error={minPriceError}
                                    disabled={disabled}
                                    label={context.t("min-price")}
                                    value={minPrice}
                                    type="number"
                                    margin="normal"
-                                   onChange={(e) => handleFieldChange({"minPrice": e.target.value})}
+                                   onChange={(e) => handleFieldChange({
+                                       "property": "minPrice",
+                                       "value": e.target.value
+                                   })}
                         />
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth
-                                   error={false}
+                                   error={minBedsError}
                                    disabled={disabled}
                                    label={context.t("min-beds")}
                                    value={minBeds}
                                    type="number"
                                    margin="normal"
-                                   onChange={(e) => handleFieldChange({"minBeds": e.target.value})}
+                                   onChange={(e) => handleFieldChange({"property": "minBeds", "value": e.target.value})}
                         />
                     </Grid>
                     <Grid item xs>

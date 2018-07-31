@@ -13,3 +13,8 @@ export const onFilterFormFieldsChange = (field) => ({
     type: actionTypes.ON_FILTER_FORM_FIELDS_CHANGE,
     field
 });
+
+export const filterFieldsError = (errors) => ({
+    type: actionTypes.FILTER_FORM_FIELDS_ERROR,
+    errors
+});

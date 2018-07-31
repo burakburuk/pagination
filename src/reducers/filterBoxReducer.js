@@ -8,9 +8,18 @@ const onFilterFormFieldChange = (filterState, action) => {
     };
 };
 
+const filterFormFieldsError = (filterState, action) => {
+    const {errors} = action;
+    return {
+        ...filterState,
+        ...errors
+    };
+};
+
 // Slice reducer
 const filterBoxReducer = createReducer([], {
-    'ON_FILTER_FORM_FIELDS_CHANGE': onFilterFormFieldChange
+    'ON_FILTER_FORM_FIELDS_CHANGE': onFilterFormFieldChange,
+    'FILTER_FORM_FIELDS_ERROR': filterFormFieldsError,
 });
 
 export default filterBoxReducer;

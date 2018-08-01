@@ -3,8 +3,9 @@ const getAgentNames = () => ["Dexters", "YOPA", "Foxtons"][getRandomNumberBetwee
 const getPropertyType = () => ["Flat", "Detached", "Terraced"][getRandomNumberBetween(0, 2)];
 const getNumOfBedrooms = () => getRandomNumberBetween(1, 6);
 const getPrice = () => getRandomNumberBetween(100000, 350000);
+const getLocation = () => ["Cambridge", "Oxford", "London", "Eidenburg"];
 
-export default function createDummyPropertyData(size) {
+export function createDummyPropertyData(params, size) {
     let propertyData = [];
     for (let i = 0; i < size; i++) {
         const obj = {
@@ -16,5 +17,25 @@ export default function createDummyPropertyData(size) {
         };
         propertyData.push(obj);
     }
-    return propertyData;
+    return filterResult(propertyData, params);
+}
+
+function filterResult(propertyData, params) {
+    return propertyData.filter(item => {
+        if (params["min_price"] !== "") {
+            if (parseInt(params["min_price"]) > item.price) {
+                return false;
+            }
+        }
+        if (params["minimum_beds"] !== "") {
+            if (parseInt(params["minimum_beds"]) > item.bedrooms) {
+                return false;
+            }
+        }
+        return true;
+    });
+}
+
+export function createDummyLocationData(filter) {
+    return getLocation().filter(filter);
 }

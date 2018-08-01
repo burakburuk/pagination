@@ -8,7 +8,7 @@ class Filter extends Component {
     onSubmit = (e) => {
         const {filterBoxState} = this.props;
         const errorObj = {
-            "locationError": (filterBoxState.location === ""),
+            //"locationError": (filterBoxState.location === ""),
             "minPriceError": (filterBoxState.minPrice === ""),
             "minBedsError": (filterBoxState.minBeds === "")
         };
@@ -17,11 +17,16 @@ class Filter extends Component {
                 return this.props.filterFieldsError(errorObj);
             }
         }
-        this.props.requestListProperties([
-            `area=${filterBoxState.location}`,
-            `minPrice=${filterBoxState.minPrice}`,
-            `minBeds=${filterBoxState.minBeds}`
-        ]);
+        //filterBoxState.location
+        const requestParams = {
+            'area': 'Oxford',
+            'min_price': filterBoxState.minPrice,
+            'minimum_beds': filterBoxState.minBeds,
+            'order': 'ascending',
+            'page_number': 1,
+            'page_size': 10
+        };
+        this.props.requestListProperties(requestParams);
     };
 
     handleFieldChange = (field) => {

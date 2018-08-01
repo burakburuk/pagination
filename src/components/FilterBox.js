@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import LocationAutoComplete from './LocationAutoComplete';
 
 const styles = theme => ({
     container: {
@@ -26,17 +27,11 @@ const FilterBox = (props, context) => {
             <form className={classes.container} noValidate autoComplete="off">
                 <Grid container spacing={8}>
                     <Grid item xs={4}>
-                        <TextField fullWidth
-                                   error={locationError}
-                                   disabled={disabled}
-                                   label={context.t("location")}
-                                   value={location}
-                                   margin="normal"
-                                   onChange={(e) => handleFieldChange({
-                                       "property": "location",
-                                       "value": e.target.value
-                                   })}
-                        />
+                        <LocationAutoComplete
+                            error={locationError}
+                            disabled={disabled}
+                            label={context.t("location")}
+                            value={location}/>
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth

@@ -14,9 +14,9 @@ export const requestListPropertiesComplete = () => ({
     disabled: false
 });
 
-export const updatePropertiesTable = (data) => ({
+export const updatePropertiesTable = (result) => ({
     type: actionTypes.UPDATE_PROPERTIES_TABLE,
-    data
+    ...result
 });
 
 export const onFilterFormFieldsChange = (field) => ({
@@ -27,4 +27,9 @@ export const onFilterFormFieldsChange = (field) => ({
 export const filterFieldsError = (errors) => ({
     type: actionTypes.FILTER_FORM_FIELDS_ERROR,
     errors
+});
+
+export const requestGeoAutoCompleteDone = (data) => ({
+    type: actionTypes.GEO_AUTO_COMPLETE_REQUEST_DONE,
+    data
 });

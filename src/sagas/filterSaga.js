@@ -1,7 +1,10 @@
 import {takeEvery, call, put} from "redux-saga/effects";
 import * as actionTypes from "../constants";
 import * as api from '../services';
-import {requestListPropertiesComplete, updatePropertiesTable} from '../actions';
+import {
+    requestListPropertiesComplete, updatePropertiesTable,
+    requestGeoAutoCompleteDone
+} from '../actions';
 
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
@@ -23,11 +26,11 @@ export function* watchListPropertiesRequest() {
 
 function* requestGeoAutoComplete(action) {
     try {
-        const {response, error} = yield call(() => api.requestGeoAutoComplete());
+        const {response, error} = yield call(() => api.requestGeoAutoComplete(action.filter));
         if (error) {
             throw new Error(error);
         } else {
-            console.dir(response)
+            yield put(requestGeoAutoCompleteDone(response));
         }
     }
     catch
@@ -39,15 +42,31 @@ function* requestGeoAutoComplete(action) {
 function* requestListProperties(action) {
     try {
         const {response, error} = yield call(() => api.requestProperties(action.filter));
+        debugger;
         if (error) {
             throw new Error(error);
         } else {
-            yield put(requestListPropertiesComplete());
-            yield put(updatePropertiesTable(response));
+            const listing = response.listing.map(item => {
+                return {
+                    'listingId': item.listing_id._text,
+                    'price': item.price._text,
+                    'bedrooms': item.num_bedrooms._text,
+                    'propertyType': item.property_type._text,
+                    'agentName': item.agent_name._text,
+                }
+            });
+            const result = {
+                areaName: response.area_name._text,
+                resultCount: response.result_count._text,
+                data: listing
+            };
+            yield put(updatePropertiesTable(result));
         }
     }
     catch
         (error) {
         console.warn(error.message);
+    } finally {
+        yield put(requestListPropertiesComplete());
     }
 }

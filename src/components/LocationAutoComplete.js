@@ -55,7 +55,7 @@ const suggestions = [
 const styles = theme => ({
     root: {
         flexGrow: 1,
-        height: 250,
+        marginTop: 28,
     },
     input: {
         display: 'flex',

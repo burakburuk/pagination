@@ -42,7 +42,6 @@ function* requestGeoAutoComplete(action) {
 function* requestListProperties(action) {
     try {
         const {response, error} = yield call(() => api.requestProperties(action.filter));
-        debugger;
         if (error) {
             throw new Error(error);
         } else {
@@ -57,14 +56,13 @@ function* requestListProperties(action) {
             });
             const result = {
                 areaName: response.area_name._text,
-                resultCount: response.result_count._text,
+                resultCount: parseInt(response.result_count._text),
                 data: listing
             };
             yield put(updatePropertiesTable(result));
         }
     }
-    catch
-        (error) {
+    catch (error) {
         console.warn(error.message);
     } finally {
         yield put(requestListPropertiesComplete());

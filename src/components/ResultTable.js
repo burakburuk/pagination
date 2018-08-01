@@ -26,7 +26,10 @@ const styles = theme => ({
 
 
 const ResultTable = (props, context) => {
-    const {classes, data, rowsPerPage, page, handleChangePage, handleChangeRowsPerPage} = props;
+    const {
+        classes, data, rowsPerPage, page, handleChangePage,
+        handleChangeRowsPerPage, areaName, resultCount
+    } = props;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
@@ -64,12 +67,13 @@ const ResultTable = (props, context) => {
                         <TableRow>
                             <TablePagination
                                 colSpan={3}
-                                count={data.length}
+                                count={resultCount}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
                                 onChangePage={handleChangePage}
                                 onChangeRowsPerPage={handleChangeRowsPerPage}
                                 ActionsComponent={ResultTableActions}
+                                rowsPerPageOptions={[10, 20, 50]}
                             />
                         </TableRow>
                     </TableFooter>

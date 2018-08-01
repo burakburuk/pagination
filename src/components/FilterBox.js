@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button';
 import LocationAutoComplete from './LocationAutoComplete';
 
 const styles = theme => ({
+    root: {
+        width: '100%',
+    },
     container: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -23,7 +26,7 @@ const styles = theme => ({
 const FilterBox = (props, context) => {
     const {classes, location, locationError, minPrice, minPriceError, minBeds, minBedsError, disabled, onSubmit, handleFieldChange} = props;
     return (
-        <div>
+        <div className={classes.root}>
             <form className={classes.container} noValidate autoComplete="off">
                 <Grid container spacing={8}>
                     <Grid item xs={4}>

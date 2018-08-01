@@ -24,7 +24,7 @@ class Filter extends Component {
             'minimum_beds': filterBoxState.minBeds,
             'order': 'ascending',
             'page_number': 1,
-            'page_size': 10
+            'page_size': 20
         };
         this.props.requestListProperties(requestParams);
     };

@@ -27,7 +27,8 @@ const FilterBox = (props, context) => {
     const {
         classes, location, locationError, minPrice,
         minPriceError, minBeds, minBedsError, disabled,
-        onSubmit, handleFieldChange, onLocationChange
+        onSubmit, handleFieldChange, onLocationChange,
+        onSelectionComplete, suggestions
     } = props;
     return (
         <div className={classes.root}>
@@ -39,7 +40,9 @@ const FilterBox = (props, context) => {
                             disabled={disabled}
                             label={context.t("location")}
                             value={location}
-                            onChange={onLocationChange}/>
+                            suggestions={suggestions}
+                            onChange={onLocationChange}
+                            onSelectionComplete={onSelectionComplete}/>
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth

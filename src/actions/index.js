@@ -1,7 +1,8 @@
 import * as actionTypes from "../constants";
 
-export const requestGeoAutoComplete = () => ({
-    type: actionTypes.HANDLE_GEO_AUTO_COMPLETE_REQUEST
+export const requestGeoAutoComplete = (event) => ({
+    type: actionTypes.HANDLE_GEO_AUTO_COMPLETE_REQUEST,
+    searchTerm: event.target.value
 });
 
 export const requestListPropertiesStart = (filter) => ({
@@ -31,7 +32,7 @@ export const filterFieldsError = (errors) => ({
 
 export const requestGeoAutoCompleteDone = (data) => ({
     type: actionTypes.GEO_AUTO_COMPLETE_REQUEST_DONE,
-    data
+    suggestions: data
 });
 
 export const handleChangeRowsPerPage = (event) => ({
@@ -44,7 +45,12 @@ export const handleChangePage = (page) => ({
     page, isDisabled: true
 });
 
-export const onLocationChange = (event) => ({
+export const onLocationChange = (location) => ({
     type: actionTypes.ON_LOCATION_FILTER_CHANGE,
-    location: event.target.value
+    location
+});
+
+export const onSelectionComplete = (selectedLocation) => ({
+    type: actionTypes.ON_LOCATION_FILTER_SET,
+    selectedLocation
 });

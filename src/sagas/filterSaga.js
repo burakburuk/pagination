@@ -3,7 +3,8 @@ import * as actionTypes from "../constants";
 import * as api from '../services';
 import {
     requestListPropertiesComplete, updatePropertiesTable,
-    requestGeoAutoCompleteDone, requestListPropertiesStart
+    requestGeoAutoCompleteDone, requestListPropertiesStart,
+    onLocationChange
 } from '../actions';
 import objectAssign from 'object-assign';
 
@@ -31,11 +32,29 @@ export function* watchChangeTableActionsRequest() {
 
 function* requestGeoAutoComplete(action) {
     try {
-        const {response, error} = yield call(() => api.requestGeoAutoComplete(action.filter));
+        if (action.searchTerm === "") {
+            return yield put(requestGeoAutoCompleteDone([]));
+        }
+
+        const params = {
+            search_type: 'listings',
+            search_term: action.searchTerm
+        };
+        const {response, error} = yield call(() => api.requestGeoAutoComplete(params));
         if (error) {
             throw new Error(error);
         } else {
-            yield put(requestGeoAutoCompleteDone(response));
+            if (response.suggestions.length > 0) {
+                yield put(onLocationChange(action.searchTerm));
+            }
+            const result = response.suggestions.map(item => {
+                return {
+                    label: item.value ? item.value._text : "",
+                    value: item.identifier ? item.identifier._text : ""
+                }
+            });
+
+            yield put(requestGeoAutoCompleteDone(result));
         }
     }
     catch
@@ -85,7 +104,7 @@ function* requestChangePage(action) {
     const state = yield select();
     //filterBoxState.location
     const requestParams = {
-        'area': 'Oxford',
+        'area': state.filterBox.location,
         'min_price': state.filterBox.minPrice,
         'minimum_beds': state.filterBox.minBeds
     };

@@ -1,12 +1,17 @@
 const initialState = {
     filterBox: {
+        suggestions: [],
         location: "",
+        selectedLocation: {
+            label: "",
+            value: ""
+        },
         locationError: false,
         minPrice: "",
         minPriceError: false,
         minBeds: "",
         minBedsError: false,
-        disabled: false,
+        disabled: false
     },
     resultTable: {
         isDisabled: false,

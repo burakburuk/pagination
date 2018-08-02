@@ -30,12 +30,29 @@ const requestListPropertiesComplete = (filterState, action) => {
     };
 };
 
+const onLocationFilterChange = (filterState, action) => {
+    return {
+        ...filterState,
+        ...action
+    };
+};
+
+const onGeoAutoCompleteRequestDone = (filterState, action) => {
+    return {
+        ...filterState,
+        ...action
+    };
+};
+
 // Slice reducer
 const filterBoxReducer = createReducer([], {
     'ON_FILTER_FORM_FIELDS_CHANGE': onFilterFormFieldChange,
     'FILTER_FORM_FIELDS_ERROR': filterFormFieldsError,
     'HANDLE_LIST_PROPERTIES_REQUEST': handleListPropertiesRequest,
     'LIST_PROPERTIES_REQUEST_COMPLETE': requestListPropertiesComplete,
+    'ON_LOCATION_FILTER_CHANGE': onLocationFilterChange,
+    'GEO_AUTO_COMPLETE_REQUEST_DONE': onGeoAutoCompleteRequestDone,
+    'ON_LOCATION_FILTER_SET': onLocationFilterChange
 });
 
 export default filterBoxReducer;

@@ -4,14 +4,15 @@ import {connect} from 'react-redux';
 import FilterBox from '../components/FilterBox';
 import {
     requestListPropertiesStart, onFilterFormFieldsChange,
-    filterFieldsError, onLocationChange
+    filterFieldsError, onLocationChange, requestGeoAutoComplete,
+    onSelectionComplete
 } from '../actions';
 
 class Filter extends Component {
     onSubmit = (e) => {
         const {filterBoxState} = this.props;
         const errorObj = {
-            //"locationError": (filterBoxState.location === ""),
+            "locationError": (filterBoxState.location === ""),
             "minPriceError": (filterBoxState.minPrice === ""),
             "minBedsError": (filterBoxState.minBeds === "")
         };
@@ -20,9 +21,8 @@ class Filter extends Component {
                 return this.props.filterFieldsError(errorObj);
             }
         }
-        //filterBoxState.location
         const requestParams = {
-            'area': 'Oxford',
+            'area': filterBoxState.location,
             'min_price': filterBoxState.minPrice,
             'minimum_beds': filterBoxState.minBeds
         };
@@ -36,14 +36,18 @@ class Filter extends Component {
     };
 
     onLocationChange = (event) => {
-        this.props.onLocationChange(event);
+        this.props.requestGeoAutoComplete(event);
+    };
+
+    onSelectionComplete = (selection) => {
+        this.props.onSelectionComplete(selection);
     };
 
     render() {
         const {filterBoxState} = this.props;
         return (
             <FilterBox {...filterBoxState} onSubmit={this.onSubmit} handleFieldChange={this.handleFieldChange}
-                       onLocationChange={this.onLocationChange}/>
+                       onLocationChange={this.onLocationChange} onSelectionComplete={this.onSelectionComplete}/>
         );
     }
 }
@@ -61,6 +65,8 @@ const mapDispatchToProps = (dispatch) => ({
     onFilterFormFieldsChange: (field) => dispatch(onFilterFormFieldsChange(field)),
     filterFieldsError: (errors) => dispatch(filterFieldsError(errors)),
     onLocationChange: (event) => dispatch(onLocationChange(event)),
+    requestGeoAutoComplete: (event) => dispatch(requestGeoAutoComplete(event)),
+    onSelectionComplete: (selection) => dispatch(onSelectionComplete(selection)),
 });
 
 export default connect(

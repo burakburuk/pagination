@@ -32,4 +32,4 @@ function callApi(endpoint, params) {
 
 // api services
 export const requestProperties = (params) => callApi('property_listings', params);
-export const requestGeoAutoComplete = () => callApi('geo_autocomplete');
+export const requestGeoAutoComplete = (params) => callApi('geo_autocomplete', params);

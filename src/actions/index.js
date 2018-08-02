@@ -4,7 +4,7 @@ export const requestGeoAutoComplete = () => ({
     type: actionTypes.HANDLE_GEO_AUTO_COMPLETE_REQUEST
 });
 
-export const requestListProperties = (filter) => ({
+export const requestListPropertiesStart = (filter) => ({
     type: actionTypes.HANDLE_LIST_PROPERTIES_REQUEST,
     filter, disabled: true
 });
@@ -16,7 +16,7 @@ export const requestListPropertiesComplete = () => ({
 
 export const updatePropertiesTable = (result) => ({
     type: actionTypes.UPDATE_PROPERTIES_TABLE,
-    ...result
+    ...result, isDisabled: true
 });
 
 export const onFilterFormFieldsChange = (field) => ({
@@ -32,4 +32,19 @@ export const filterFieldsError = (errors) => ({
 export const requestGeoAutoCompleteDone = (data) => ({
     type: actionTypes.GEO_AUTO_COMPLETE_REQUEST_DONE,
     data
+});
+
+export const handleChangeRowsPerPage = (event) => ({
+    type: actionTypes.HANDLE_CHANGE_TABLE_ACTIONS,
+    rowsPerPage: event.target.value, isDisabled: true
+});
+
+export const handleChangePage = (page) => ({
+    type: actionTypes.HANDLE_CHANGE_TABLE_ACTIONS,
+    page, isDisabled: true
+});
+
+export const onLocationChange = (event) => ({
+    type: actionTypes.ON_LOCATION_FILTER_CHANGE,
+    location: event.target.value
 });

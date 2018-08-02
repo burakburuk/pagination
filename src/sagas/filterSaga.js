@@ -1,10 +1,11 @@
-import {takeEvery, call, put} from "redux-saga/effects";
+import {takeEvery, call, put, select} from "redux-saga/effects";
 import * as actionTypes from "../constants";
 import * as api from '../services';
 import {
     requestListPropertiesComplete, updatePropertiesTable,
-    requestGeoAutoCompleteDone
+    requestGeoAutoCompleteDone, requestListPropertiesStart
 } from '../actions';
+import objectAssign from 'object-assign';
 
 /******************************************************************************/
 /******************************* WATCHERS *************************************/
@@ -17,6 +18,10 @@ export function* watchGeoAutoCompleteRequest() {
 
 export function* watchListPropertiesRequest() {
     yield takeEvery(actionTypes.HANDLE_LIST_PROPERTIES_REQUEST, requestListProperties);
+}
+
+export function* watchChangeTableActionsRequest() {
+    yield takeEvery(actionTypes.HANDLE_CHANGE_TABLE_ACTIONS, requestChangePage);
 }
 
 /******************************************************************************/
@@ -41,7 +46,14 @@ function* requestGeoAutoComplete(action) {
 
 function* requestListProperties(action) {
     try {
-        const {response, error} = yield call(() => api.requestProperties(action.filter));
+        const state = yield select();
+        const innerFilter = {
+            order: 'ascending',
+            page_number: state.resultTable.page,
+            page_size: state.resultTable.rowsPerPage
+        };
+        const filters = objectAssign({}, innerFilter, action.filter);
+        const {response, error} = yield call(() => api.requestProperties(filters));
         if (error) {
             throw new Error(error);
         } else {
@@ -67,4 +79,15 @@ function* requestListProperties(action) {
     } finally {
         yield put(requestListPropertiesComplete());
     }
+}
+
+function* requestChangePage(action) {
+    const state = yield select();
+    //filterBoxState.location
+    const requestParams = {
+        'area': 'Oxford',
+        'min_price': state.filterBox.minPrice,
+        'minimum_beds': state.filterBox.minBeds
+    };
+    yield call(() => requestListProperties(requestListPropertiesStart(requestParams)));
 }

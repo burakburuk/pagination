@@ -17,36 +17,37 @@ const styles = theme => ({
 
 const ResultTableActions = (props, context) => {
     const {
-        classes, count, page, rowsPerPage, theme,
-        handleFirstPageButtonClick, handleBackButtonClick,
-        handleNextButtonClick, handleLastPageButtonClick
+        classes, count, page, rowsPerPage, theme, onChangePage
     } = props;
 
     return (
         <div className={classes.root}>
             <IconButton
-                onClick={handleFirstPageButtonClick}
+                onClick={(event) => onChangePage(event, 0)}
                 disabled={page === 0}
                 aria-label="First Page"
             >
                 {theme.direction === 'rtl' ? <LastPageIcon/> : <FirstPageIcon/>}
             </IconButton>
             <IconButton
-                onClick={handleBackButtonClick}
+                onClick={(event) => onChangePage(event, page - 1)}
                 disabled={page === 0}
                 aria-label="Previous Page"
             >
                 {theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
             </IconButton>
             <IconButton
-                onClick={handleNextButtonClick}
+                onClick={(event) => onChangePage(event, page + 1)}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="Next Page"
             >
                 {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
             </IconButton>
             <IconButton
-                onClick={handleLastPageButtonClick}
+                onClick={(event) => onChangePage(
+                    event,
+                    Math.max(0, Math.ceil(count / rowsPerPage) - 1),
+                )}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="Last Page"
             >
@@ -54,7 +55,7 @@ const ResultTableActions = (props, context) => {
             </IconButton>
         </div>
     );
-}
+};
 
 ResultTableActions.propTypes = {
     classes: PropTypes.object.isRequired,

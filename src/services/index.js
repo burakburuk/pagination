@@ -1,4 +1,4 @@
-var convert = require('xml-js');
+import {xml2json} from 'xml-js';
 
 const API_ROOT = 'https://api.zoopla.co.uk/api/v1/';
 const API_KEY = 'dfdz5hck8anunvtqjeva6ys3';
@@ -22,7 +22,7 @@ function callApi(endpoint, params) {
             if (!response.ok) {
                 return Promise.reject(xml)
             }
-            return JSON.parse(convert.xml2json(xml, {compact: true, spaces: 4})).response;
+            return JSON.parse(xml2json(xml, {compact: true, spaces: 4})).response;
         })
         .then(
             response => ({response}),
@@ -33,16 +33,3 @@ function callApi(endpoint, params) {
 // api services
 export const requestProperties = (params) => callApi('property_listings', params);
 export const requestGeoAutoComplete = () => callApi('geo_autocomplete');
-
-// export const requestProperties = (params) => {
-//     console.log(createParams(params));
-//     return new Promise((resolve, reject) => {
-//         resolve({response: createDummyPropertyData(params, 100)});
-//     });
-// };
-//
-// export const requestGeoAutoComplete = (params) => {
-//     return new Promise((resolve, reject) => {
-//         resolve({response: createDummyLocationData(params)});
-//     })
-// };

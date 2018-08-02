@@ -28,9 +28,9 @@ const styles = theme => ({
 const ResultTable = (props, context) => {
     const {
         classes, data, rowsPerPage, page, handleChangePage,
-        handleChangeRowsPerPage, areaName, resultCount
+        handleChangeRowsPerPage, areaName, resultCount, isDisabled
     } = props;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length);
 
     return (
         <Paper className={classes.root}>
@@ -46,10 +46,10 @@ const ResultTable = (props, context) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                        {data.map(n => {
                             return (
                                 <TableRow key={n.listingId}>
-                                    <TableCell numeric>{n.listingId}</TableCell>
+                                    <TableCell component="th" scope="row">{n.listingId}</TableCell>
                                     <TableCell numeric>{n.price}</TableCell>
                                     <TableCell numeric>{n.bedrooms}</TableCell>
                                     <TableCell>{n.propertyType}</TableCell>
@@ -59,7 +59,7 @@ const ResultTable = (props, context) => {
                         })}
                         {emptyRows > 0 && (
                             <TableRow style={{height: 48 * emptyRows}}>
-                                <TableCell colSpan={6}/>
+                                <TableCell colSpan={5}/>
                             </TableRow>
                         )}
                     </TableBody>
@@ -70,6 +70,12 @@ const ResultTable = (props, context) => {
                                 count={resultCount}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
+                                backIconButtonProps={{
+                                    disabled: isDisabled
+                                }}
+                                nextIconButtonProps={{
+                                    disabled: isDisabled
+                                }}
                                 onChangePage={handleChangePage}
                                 onChangeRowsPerPage={handleChangeRowsPerPage}
                                 ActionsComponent={ResultTableActions}

@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import FilterBox from '../components/FilterBox';
-import {requestListProperties, onFilterFormFieldsChange, filterFieldsError} from '../actions';
+import {
+    requestListPropertiesStart, onFilterFormFieldsChange,
+    filterFieldsError, onLocationChange
+} from '../actions';
 
 class Filter extends Component {
     onSubmit = (e) => {
@@ -21,12 +24,9 @@ class Filter extends Component {
         const requestParams = {
             'area': 'Oxford',
             'min_price': filterBoxState.minPrice,
-            'minimum_beds': filterBoxState.minBeds,
-            'order': 'ascending',
-            'page_number': 1,
-            'page_size': 20
+            'minimum_beds': filterBoxState.minBeds
         };
-        this.props.requestListProperties(requestParams);
+        this.props.requestListPropertiesStart(requestParams);
     };
 
     handleFieldChange = (field) => {
@@ -35,10 +35,15 @@ class Filter extends Component {
         this.props.onFilterFormFieldsChange(field);
     };
 
+    onLocationChange = (event) => {
+        this.props.onLocationChange(event);
+    };
+
     render() {
         const {filterBoxState} = this.props;
         return (
-            <FilterBox {...filterBoxState} onSubmit={this.onSubmit} handleFieldChange={this.handleFieldChange}/>
+            <FilterBox {...filterBoxState} onSubmit={this.onSubmit} handleFieldChange={this.handleFieldChange}
+                       onLocationChange={this.onLocationChange}/>
         );
     }
 }
@@ -52,9 +57,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    requestListProperties: (filter) => dispatch(requestListProperties(filter)),
+    requestListPropertiesStart: (filter) => dispatch(requestListPropertiesStart(filter)),
     onFilterFormFieldsChange: (field) => dispatch(onFilterFormFieldsChange(field)),
     filterFieldsError: (errors) => dispatch(filterFieldsError(errors)),
+    onLocationChange: (event) => dispatch(onLocationChange(event)),
 });
 
 export default connect(

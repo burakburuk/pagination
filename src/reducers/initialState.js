@@ -9,6 +9,7 @@ const initialState = {
         disabled: false,
     },
     resultTable: {
+        isDisabled: false,
         data: [],
         page: 0,
         rowsPerPage: 20,

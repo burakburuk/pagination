@@ -24,7 +24,11 @@ const styles = theme => ({
 });
 
 const FilterBox = (props, context) => {
-    const {classes, location, locationError, minPrice, minPriceError, minBeds, minBedsError, disabled, onSubmit, handleFieldChange} = props;
+    const {
+        classes, location, locationError, minPrice,
+        minPriceError, minBeds, minBedsError, disabled,
+        onSubmit, handleFieldChange, onLocationChange
+    } = props;
     return (
         <div className={classes.root}>
             <form className={classes.container} noValidate autoComplete="off">
@@ -34,7 +38,8 @@ const FilterBox = (props, context) => {
                             error={locationError}
                             disabled={disabled}
                             label={context.t("location")}
-                            value={location}/>
+                            value={location}
+                            onChange={onLocationChange}/>
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth

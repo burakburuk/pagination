@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {Provider} from 'react-redux';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
-import I18n from "redux-i18n";
-import {setLanguage} from "redux-i18n"
 import {translations} from "../translations";
 import Filter from './Filter';
 import Result from './Result';
@@ -19,20 +17,14 @@ const styles = theme => ({
 });
 
 class App extends Component {
-    componentWillMount() {
-        this.props.translate("en");
-    }
-
     render() {
-        const {store,classes} = this.props;
+        const {store, classes} = this.props;
         return (
             <Provider store={store}>
-                <I18n translations={translations}>
-                    <div className={classes.container}>
-                        <Filter/>
-                        <Result/>
-                    </div>
-                </I18n>
+                <div className={classes.container}>
+                    <Filter/>
+                    <Result/>
+                </div>
             </Provider>
         );
     }
@@ -42,15 +34,9 @@ App.propTypes = {
     store: PropTypes.object.isRequired
 };
 
-App.contextTypes = {
-    t: PropTypes.func
-};
-
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = (dispatch) => ({
-    translate: (lang) => dispatch(setLanguage(lang))
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 export default connect(
     mapStateToProps,

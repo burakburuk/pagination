@@ -20,8 +20,13 @@ export const updatePropertiesTable = (result) => ({
     ...result, isDisabled: true
 });
 
-export const onFilterFormFieldsChange = (field) => ({
-    type: actionTypes.ON_FILTER_FORM_FIELDS_CHANGE,
+export const onFilterMinPriceFieldChange = (field) => ({
+    type: actionTypes.ON_FILTER_MIN_PRICE_FIELDS_CHANGE,
+    field
+});
+
+export const onFilterMinBedsFieldChange = (field) => ({
+    type: actionTypes.ON_FILTER_MIN_BEDS_FIELDS_CHANGE,
     field
 });
 
@@ -41,7 +46,7 @@ export const handleChangeRowsPerPage = (event) => ({
 });
 
 export const handleChangePage = (page) => ({
-    type: actionTypes.HANDLE_CHANGE_TABLE_ACTIONS,
+    type: actionTypes.HANDLE_CHANGE_TABLE_PAGE_ACTIONS,
     page, isDisabled: true
 });
 

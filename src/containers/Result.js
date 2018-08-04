@@ -16,18 +16,14 @@ class Result extends Component {
     render() {
         const {resultTableState} = this.props;
         return (
-            <ResultTable {...resultTableState} handleChangePage={this.handleChangePage}
+            <ResultTable {...(resultTableState.toJS())} handleChangePage={this.handleChangePage}
                          handleChangeRowsPerPage={this.handleChangeRowsPerPage}/>
         )
     }
 }
 
-Result.contextTypes = {
-    t: PropTypes.func
-};
-
 const mapStateToProps = (state) => ({
-    resultTableState: state.resultTable
+    resultTableState: state.get('resultTable')
 });
 
 const mapDispatchToProps = (dispatch) => ({

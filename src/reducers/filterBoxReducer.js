@@ -1,58 +1,31 @@
-import {updateObject, createReducer} from './reducerUtilities';
+import * as actionTypes from '../constants';
+import * as utils from './reducerUtilities';
+import * as mutate from "./mutators";
+import initialState from './initialState';
 
-const onFilterFormFieldChange = (filterState, action) => {
-    const {field} = action;
-    return {
-        ...filterState,
-        ...field
-    };
-};
-
-const filterFormFieldsError = (filterState, action) => {
-    const {errors} = action;
-    return {
-        ...filterState,
-        ...errors
-    };
-};
-
-const handleListPropertiesRequest = (filterState, action) => {
-    return {
-        ...filterState,
-        disabled: action.disabled
-    };
-};
-
-const requestListPropertiesComplete = (filterState, action) => {
-    return {
-        ...filterState,
-        disabled: action.disabled
-    };
-};
-
-const onLocationFilterChange = (filterState, action) => {
-    return {
-        ...filterState,
-        ...action
-    };
-};
-
-const onGeoAutoCompleteRequestDone = (filterState, action) => {
-    return {
-        ...filterState,
-        ...action
-    };
-};
-
-// Slice reducer
-const filterBoxReducer = createReducer([], {
-    'ON_FILTER_FORM_FIELDS_CHANGE': onFilterFormFieldChange,
-    'FILTER_FORM_FIELDS_ERROR': filterFormFieldsError,
-    'HANDLE_LIST_PROPERTIES_REQUEST': handleListPropertiesRequest,
-    'LIST_PROPERTIES_REQUEST_COMPLETE': requestListPropertiesComplete,
-    'ON_LOCATION_FILTER_CHANGE': onLocationFilterChange,
-    'GEO_AUTO_COMPLETE_REQUEST_DONE': onGeoAutoCompleteRequestDone,
-    'ON_LOCATION_FILTER_SET': onLocationFilterChange
-});
-
-export default filterBoxReducer;
+export default function filterBoxReducer(state = initialState, action) {
+    switch (action.type) {
+        case actionTypes.ON_FILTER_MIN_BEDS_FIELDS_CHANGE:
+            return utils.pipe([
+                mutate.updateMinBeds(action.field.minBeds),
+                mutate.updateMinBedsError(action.field.minBedsError)
+            ], state);
+        case actionTypes.ON_FILTER_MIN_PRICE_FIELDS_CHANGE:
+            return utils.pipe([
+                mutate.updateMinPrice(action.field.minPrice),
+                mutate.updateMinPriceError(action.field.minPriceError)
+            ], state);
+        case actionTypes.FILTER_FORM_FIELDS_ERROR:
+        case actionTypes.LIST_PROPERTIES_REQUEST_COMPLETE:
+        case actionTypes.HANDLE_LIST_PROPERTIES_REQUEST:
+            return state.set('disabled', action.disabled);
+        case actionTypes.ON_LOCATION_FILTER_CHANGE:
+            return state.set('location', action.location);
+        case actionTypes.GEO_AUTO_COMPLETE_REQUEST_DONE:
+            return state.set('suggestions', action.suggestions);
+        case actionTypes.ON_LOCATION_FILTER_SET:
+            return state.set('selectedLocation', action.selectedLocation);
+        default :
+            return state;
+    }
+}

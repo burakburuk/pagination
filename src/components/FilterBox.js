@@ -27,7 +27,8 @@ const FilterBox = (props, context) => {
     const {
         classes, location, locationError, minPrice,
         minPriceError, minBeds, minBedsError, disabled,
-        onSubmit, handleFieldChange, onLocationChange,
+        onSubmit, onFilterMinBedsFieldChange,
+        onFilterMinPriceFieldChange, onLocationChange,
         onSelectionComplete, suggestions
     } = props;
     return (
@@ -38,7 +39,7 @@ const FilterBox = (props, context) => {
                         <LocationAutoComplete
                             error={locationError}
                             disabled={disabled}
-                            label={context.t("location")}
+                            label="Location"
                             value={location}
                             suggestions={suggestions}
                             onChange={onLocationChange}
@@ -48,11 +49,11 @@ const FilterBox = (props, context) => {
                         <TextField fullWidth
                                    error={minPriceError}
                                    disabled={disabled}
-                                   label={context.t("min-price")}
+                                   label="Minimum Price"
                                    value={minPrice}
                                    type="number"
                                    margin="normal"
-                                   onChange={(e) => handleFieldChange({
+                                   onChange={(e) => onFilterMinPriceFieldChange({
                                        "property": "minPrice",
                                        "value": e.target.value
                                    })}
@@ -62,17 +63,20 @@ const FilterBox = (props, context) => {
                         <TextField fullWidth
                                    error={minBedsError}
                                    disabled={disabled}
-                                   label={context.t("min-beds")}
+                                   label="Minimum Beds"
                                    value={minBeds}
                                    type="number"
                                    margin="normal"
-                                   onChange={(e) => handleFieldChange({"property": "minBeds", "value": e.target.value})}
+                                   onChange={(e) => onFilterMinBedsFieldChange({
+                                       "property": "minBeds",
+                                       "value": e.target.value
+                                   })}
                         />
                     </Grid>
                     <Grid item xs>
                         <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}
                                 disabled={disabled}>
-                            {context.t("submit")}
+                            Submit
                         </Button>
                     </Grid>
                 </Grid>
@@ -85,10 +89,6 @@ FilterBox.defaultProps = {
     onSubmit: () => {
         throw new Error("onSubmit is not implemented!");
     }
-};
-
-FilterBox.contextTypes = {
-    t: PropTypes.func.isRequired
 };
 
 FilterBox.propTypes = {

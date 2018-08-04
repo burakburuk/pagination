@@ -98,10 +98,6 @@ ResultTable.defaultProps = {
     }
 };
 
-ResultTable.contextTypes = {
-    t: PropTypes.func.isRequired
-};
-
 ResultTable.propTypes = {
     classes: PropTypes.object.isRequired,
     handleChangePage: PropTypes.func.isRequired,

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import FilterBox from '../components/FilterBox';
 import {
-    requestListPropertiesStart, onFilterFormFieldsChange,
-    filterFieldsError, onLocationChange, requestGeoAutoComplete,
-    onSelectionComplete
+    requestListPropertiesStart, onFilterMinPriceFieldChange,
+    onFilterMinBedsFieldChange, filterFieldsError, onLocationChange,
+    requestGeoAutoComplete, onSelectionComplete
 } from '../actions';
 
 class Filter extends Component {
@@ -29,10 +29,16 @@ class Filter extends Component {
         this.props.requestListPropertiesStart(requestParams);
     };
 
-    handleFieldChange = (field) => {
+    onFilterMinPriceFieldChange = (field) => {
         field[field.property + "Error"] = (field.value === "");
         field[field.property] = field.value;
-        this.props.onFilterFormFieldsChange(field);
+        this.props.onFilterMinPriceFieldChange(field);
+    };
+
+    onFilterMinBedsFieldChange = (field) => {
+        field[field.property + "Error"] = (field.value === "");
+        field[field.property] = field.value;
+        this.props.onFilterMinBedsFieldChange(field);
     };
 
     onLocationChange = (event) => {
@@ -46,23 +52,22 @@ class Filter extends Component {
     render() {
         const {filterBoxState} = this.props;
         return (
-            <FilterBox {...filterBoxState} onSubmit={this.onSubmit} handleFieldChange={this.handleFieldChange}
+            <FilterBox {...(filterBoxState.toJS())} onSubmit={this.onSubmit}
+                       onFilterMinPriceFieldChange={this.onFilterMinPriceFieldChange}
+                       onFilterMinBedsFieldChange={this.onFilterMinBedsFieldChange}
                        onLocationChange={this.onLocationChange} onSelectionComplete={this.onSelectionComplete}/>
         );
     }
 }
 
-Filter.contextTypes = {
-    t: PropTypes.func
-};
-
 const mapStateToProps = (state) => ({
-    filterBoxState: state.filterBox
+    filterBoxState: state.get('filterBox')
 });
 
 const mapDispatchToProps = (dispatch) => ({
     requestListPropertiesStart: (filter) => dispatch(requestListPropertiesStart(filter)),
-    onFilterFormFieldsChange: (field) => dispatch(onFilterFormFieldsChange(field)),
+    onFilterMinPriceFieldChange: (field) => dispatch(onFilterMinPriceFieldChange(field)),
+    onFilterMinBedsFieldChange: (field) => dispatch(onFilterMinBedsFieldChange(field)),
     filterFieldsError: (errors) => dispatch(filterFieldsError(errors)),
     onLocationChange: (event) => dispatch(onLocationChange(event)),
     requestGeoAutoComplete: (event) => dispatch(requestGeoAutoComplete(event)),

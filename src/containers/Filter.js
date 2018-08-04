@@ -52,7 +52,7 @@ class Filter extends Component {
     render() {
         const {filterBoxState} = this.props;
         return (
-            <FilterBox {...(filterBoxState.toJS())} onSubmit={this.onSubmit}
+            <FilterBox filterBoxState={filterBoxState} onSubmit={this.onSubmit}
                        onFilterMinPriceFieldChange={this.onFilterMinPriceFieldChange}
                        onFilterMinBedsFieldChange={this.onFilterMinBedsFieldChange}
                        onLocationChange={this.onLocationChange} onSelectionComplete={this.onSelectionComplete}/>

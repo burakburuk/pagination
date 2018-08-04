@@ -16,7 +16,7 @@ class Result extends Component {
     render() {
         const {resultTableState} = this.props;
         return (
-            <ResultTable {...(resultTableState.toJS())} handleChangePage={this.handleChangePage}
+            <ResultTable resultTableState={resultTableState} handleChangePage={this.handleChangePage}
                          handleChangeRowsPerPage={this.handleChangeRowsPerPage}/>
         )
     }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Provider} from 'react-redux';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
-import {translations} from "../translations";
 import Filter from './Filter';
 import Result from './Result';
 import '../assets/App.css';

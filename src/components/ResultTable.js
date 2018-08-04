@@ -25,12 +25,12 @@ const styles = theme => ({
 });
 
 
-const ResultTable = (props, context) => {
+const ResultTable = (props) => {
     const {
-        classes, data, rowsPerPage, page, handleChangePage,
-        handleChangeRowsPerPage, areaName, resultCount, isDisabled
+        classes, resultTableState, handleChangePage, handleChangeRowsPerPage
     } = props;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length);
+    const emptyRows = resultTableState.get('rowsPerPage') - Math.min(resultTableState.get('rowsPerPage'),
+        resultTableState.get('data').toJS().length);
 
     return (
         <Paper className={classes.root}>
@@ -46,7 +46,7 @@ const ResultTable = (props, context) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map(n => {
+                        {resultTableState.get('data').toJS().map(n => {
                             return (
                                 <TableRow key={n.listingId}>
                                     <TableCell component="th" scope="row">{n.listingId}</TableCell>
@@ -67,19 +67,19 @@ const ResultTable = (props, context) => {
                         <TableRow>
                             <TablePagination
                                 colSpan={3}
-                                count={resultCount}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
+                                count={resultTableState.get('resultCount')}
+                                rowsPerPage={resultTableState.get('rowsPerPage')}
+                                page={resultTableState.get('page')}
                                 backIconButtonProps={{
-                                    disabled: isDisabled
+                                    disabled: resultTableState.get('isDisabled')
                                 }}
                                 nextIconButtonProps={{
-                                    disabled: isDisabled
+                                    disabled: resultTableState.get('isDisabled')
                                 }}
                                 onChangePage={handleChangePage}
                                 onChangeRowsPerPage={handleChangeRowsPerPage}
                                 ActionsComponent={ResultTableActions}
-                                rowsPerPageOptions={[10, 20, 50]}
+                                rowsPerPageOptions={resultTableState.get('rowsPerPageOptions').toJS()}
                             />
                         </TableRow>
                     </TableFooter>

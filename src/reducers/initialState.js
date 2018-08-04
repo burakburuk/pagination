@@ -20,6 +20,7 @@ const initialState = {
         rowsPerPage: 20,
         areaName: "",
         resultCount: 0,
+        rowsPerPageOptions: [10, 20, 50]
     }
 };
 

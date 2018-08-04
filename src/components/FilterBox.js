@@ -23,13 +23,10 @@ const styles = theme => ({
     },
 });
 
-const FilterBox = (props, context) => {
+const FilterBox = (props) => {
     const {
-        classes, location, locationError, minPrice,
-        minPriceError, minBeds, minBedsError, disabled,
-        onSubmit, onFilterMinBedsFieldChange,
-        onFilterMinPriceFieldChange, onLocationChange,
-        onSelectionComplete, suggestions
+        classes, filterBoxState, onSubmit, onFilterMinBedsFieldChange,
+        onFilterMinPriceFieldChange, onLocationChange, onSelectionComplete
     } = props;
     return (
         <div className={classes.root}>
@@ -37,20 +34,20 @@ const FilterBox = (props, context) => {
                 <Grid container spacing={8}>
                     <Grid item xs={4}>
                         <LocationAutoComplete
-                            error={locationError}
-                            disabled={disabled}
+                            error={filterBoxState.get('locationError')}
+                            disabled={filterBoxState.get('disabled')}
                             label="Location"
-                            value={location}
-                            suggestions={suggestions}
+                            value={filterBoxState.get('location')}
+                            suggestions={filterBoxState.get('suggestions').toJS()}
                             onChange={onLocationChange}
                             onSelectionComplete={onSelectionComplete}/>
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth
-                                   error={minPriceError}
-                                   disabled={disabled}
+                                   error={filterBoxState.get('minPriceError')}
+                                   disabled={filterBoxState.get('disabled')}
                                    label="Minimum Price"
-                                   value={minPrice}
+                                   value={filterBoxState.get('minPrice')}
                                    type="number"
                                    margin="normal"
                                    onChange={(e) => onFilterMinPriceFieldChange({
@@ -61,10 +58,10 @@ const FilterBox = (props, context) => {
                     </Grid>
                     <Grid item xs={3}>
                         <TextField fullWidth
-                                   error={minBedsError}
-                                   disabled={disabled}
+                                   error={filterBoxState.get('minBedsError')}
+                                   disabled={filterBoxState.get('disabled')}
                                    label="Minimum Beds"
-                                   value={minBeds}
+                                   value={filterBoxState.get('minBeds')}
                                    type="number"
                                    margin="normal"
                                    onChange={(e) => onFilterMinBedsFieldChange({
@@ -75,7 +72,7 @@ const FilterBox = (props, context) => {
                     </Grid>
                     <Grid item xs>
                         <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}
-                                disabled={disabled}>
+                                disabled={filterBoxState.get('disabled')}>
                             Submit
                         </Button>
                     </Grid>

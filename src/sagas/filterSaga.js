@@ -25,6 +25,10 @@ export function* watchChangeTableActionsRequest() {
     yield takeEvery(actionTypes.HANDLE_CHANGE_TABLE_ACTIONS, requestChangePage);
 }
 
+export function* watchChangeTablePageRequest() {
+    yield takeEvery(actionTypes.HANDLE_CHANGE_TABLE_PAGE_ACTIONS, requestChangePage);
+}
+
 /******************************************************************************/
 /******************************* SAGAS ****************************************/
 
@@ -104,9 +108,9 @@ function* requestChangePage(action) {
     const state = yield select();
     //filterBoxState.location
     const requestParams = {
-        'area': state.filterBox.location,
-        'min_price': state.filterBox.minPrice,
-        'minimum_beds': state.filterBox.minBeds
+        'area': state.get('filterBox').get('selectedLocation').get('value'),
+        'min_price': state.get('filterBox').get('minPrice'),
+        'minimum_beds': state.get('filterBox').get('minBeds')
     };
     yield call(() => requestListProperties(requestListPropertiesStart(requestParams)));
 }

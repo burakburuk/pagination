@@ -10,6 +10,7 @@ export const updateMessageBoxOpen = messageBoxOpen => s => s.set('messageBoxOpen
 
 export const updateSuggestions = suggestions => s => s.set('suggestions', suggestions);
 export const updateSelectedLocation = selectedLocation => s => s.set('selectedLocation', selectedLocation);
+export const updateSortBy = sortBy => s => s.set('sortBy', sortBy);
 
 export const updateAreaName = areaName => s => s.set('areaName', areaName);
 export const updateResultCount = resultCount => s => s.set('resultCount', resultCount);

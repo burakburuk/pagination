@@ -8,6 +8,7 @@ const initialState = {
             label: "",
             value: ""
         },
+        sortBy: "",
         messageBoxOpen: false,
         locationError: false,
         minPrice: "",

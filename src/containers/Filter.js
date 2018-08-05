@@ -5,8 +5,8 @@ import FilterBox from '../components/FilterBox';
 import {
     requestListPropertiesStart, onFilterMinPriceFieldChange,
     onFilterMinBedsFieldChange, filterFieldsError, onLocationChange,
-    requestGeoAutoComplete, onSelectionComplete, onMessageBoxClose,
-    clearFilters, clearResultData
+    requestGeoAutoComplete, onSelectionComplete, onMessageBoxStatusChange,
+    clearFilters, clearResultData, onSortByChange
 } from '../actions';
 import {Map} from 'immutable';
 
@@ -56,7 +56,7 @@ class Filter extends Component {
     };
 
     onMessageBoxClose = () => {
-        this.props.onMessageBoxClose(false);
+        this.props.onMessageBoxStatusChange(false);
     };
 
     clearFilters = () => {
@@ -64,13 +64,17 @@ class Filter extends Component {
         this.props.clearResultData();
     };
 
+    onSortByChange = (e) => {
+        this.props.onSortByChange(e);
+    };
+
     render() {
         const {filterBoxState} = this.props;
         return (
             <FilterBox filterBoxState={filterBoxState} onSubmit={this.onSubmit}
                        onFilterMinPriceFieldChange={this.onFilterMinPriceFieldChange}
-                       onFilterMinBedsFieldChange={this.onFilterMinBedsFieldChange}
-                       onMessageBoxClose={this.onMessageBoxClose} clearFilters={this.clearFilters}
+                       onFilterMinBedsFieldChange={this.onFilterMinBedsFieldChange} onSortByChange={this.onSortByChange}
+                       onMessageBoxClose={this.onMessageBoxClose}
                        onLocationChange={this.onLocationChange} onSelectionComplete={this.onSelectionComplete}/>
         );
     }
@@ -86,11 +90,12 @@ const mapDispatchToProps = (dispatch) => ({
     onFilterMinBedsFieldChange: (field) => dispatch(onFilterMinBedsFieldChange(field)),
     filterFieldsError: (errors) => dispatch(filterFieldsError(errors)),
     onLocationChange: (event) => dispatch(onLocationChange(event)),
-    onMessageBoxClose: (isOpen) => dispatch(onMessageBoxClose(isOpen)),
+    onMessageBoxStatusChange: (isOpen) => dispatch(onMessageBoxStatusChange(isOpen)),
     requestGeoAutoComplete: (event) => dispatch(requestGeoAutoComplete(event)),
     onSelectionComplete: (selection) => dispatch(onSelectionComplete(selection)),
     clearFilters: () => dispatch(clearFilters()),
     clearResultData: () => dispatch(clearResultData()),
+    onSortByChange: (e) => dispatch(onSortByChange(e)),
 });
 
 export default connect(

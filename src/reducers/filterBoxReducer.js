@@ -32,6 +32,8 @@ export default function filterBoxReducer(state = initialState, action) {
             return utils.pipe([mutate.updateLocation(action.location)], state);
         case actionTypes.GEO_AUTO_COMPLETE_REQUEST_DONE:
             return utils.pipe([mutate.updateSuggestions(fromJS(action.suggestions))], state);
+        case actionTypes.HANDLE_CHANGE_SORT_ORDER_REQUEST:
+            return utils.pipe([mutate.updateSortBy(action.sortBy)], state);
         case actionTypes.ON_LOCATION_FILTER_SET:
             return utils.pipe([mutate.updateSelectedLocation(action.selectedLocation)], state);
         case actionTypes.CLEAR_FILTERS:
@@ -42,6 +44,7 @@ export default function filterBoxReducer(state = initialState, action) {
                 mutate.updateMinPriceError(false),
                 mutate.updateMessageBoxOpen(false),
                 mutate.updateIsDisabled(false),
+                mutate.updateSortBy(""),
                 mutate.updateLocation(""),
                 mutate.updateSuggestions(List()),
                 mutate.updateSelectedLocation(Map({

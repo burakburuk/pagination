@@ -60,7 +60,7 @@ export const onSelectionComplete = (selectedLocation) => ({
     selectedLocation
 });
 
-export const onMessageBoxClose = (isOpen) => ({
+export const onMessageBoxStatusChange = (isOpen) => ({
     type: actionTypes.ON_MESSAGE_BOX_STATUS_CHANGE,
     isOpen
 });
@@ -71,4 +71,9 @@ export const clearFilters = () => ({
 
 export const clearResultData = () => ({
     type: actionTypes.CLEAR_RESULT_DATA,
+});
+
+export const onSortByChange = (e) => ({
+    type: actionTypes.HANDLE_CHANGE_SORT_ORDER_REQUEST,
+    sortBy: e.target.value
 });

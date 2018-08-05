@@ -6,6 +6,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LocationAutoComplete from './LocationAutoComplete';
 import Snackbar from '@material-ui/core/Snackbar';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import objectHash from 'object-hash';
 
 const styles = theme => ({
     root: {
@@ -18,17 +23,31 @@ const styles = theme => ({
     },
     button: {
         marginTop: 27,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        display: 'flex',
+        display: 'inline-flex',
+        margin: theme.spacing.unit,
     },
+    formControl: {
+        marginTop: 16,
+        width: 200,
+        float: 'right',
+        marginRight: -35,
+    },
+    messageBox: {
+        width: 200,
+    }
 });
+
+const sortList = [
+    {value: "listing_id-ascending", label: "Listing Id"},
+    {value: "price-ascending", label: "Price Ascending"},
+    {value: "price-descending", label: "Price Descending"}
+];
 
 const FilterBox = (props) => {
     const {
         classes, filterBoxState, onSubmit, onFilterMinBedsFieldChange,
         onFilterMinPriceFieldChange, onLocationChange, onSelectionComplete,
-        onMessageBoxClose, clearFilters
+        onMessageBoxClose, onSortByChange
     } = props;
     return (
         <div className={classes.root}>
@@ -44,7 +63,7 @@ const FilterBox = (props) => {
                             onChange={onLocationChange}
                             onSelectionComplete={onSelectionComplete}/>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                         <TextField fullWidth
                                    error={filterBoxState.get('minPriceError')}
                                    disabled={filterBoxState.get('disabled')}
@@ -58,7 +77,7 @@ const FilterBox = (props) => {
                                    })}
                         />
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                         <TextField fullWidth
                                    error={filterBoxState.get('minBedsError')}
                                    disabled={filterBoxState.get('disabled')}
@@ -72,17 +91,31 @@ const FilterBox = (props) => {
                                    })}
                         />
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={1}>
                         <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}
                                 disabled={filterBoxState.get('disabled')}>
                             Submit
                         </Button>
                     </Grid>
-                    <Grid item xs={1}>
-                        <Button variant="contained" color="secondary" className={classes.button} onClick={clearFilters}
-                                disabled={filterBoxState.get('disabled')}>
-                            Clear
-                        </Button>
+                    <Grid item xs={12}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="name-readonly">Sort By</InputLabel>
+                            <Select
+                                disabled={filterBoxState.get('disabled')}
+                                value={filterBoxState.get('sortBy')}
+                                onChange={(e) => onSortByChange(e)}>
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {
+                                    sortList.map(item => {
+                                        return (
+                                            <MenuItem key={objectHash(item)} value={item.value}>{item.label}</MenuItem>
+                                        )
+                                    })
+                                }
+                            </Select>
+                        </FormControl>
                     </Grid>
                 </Grid>
             </form>
@@ -90,10 +123,7 @@ const FilterBox = (props) => {
                 anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                 open={filterBoxState.get('messageBoxOpen')}
                 onClose={() => onMessageBoxClose()}
-                ContentProps={{
-                    'aria-describedby': 'message-id',
-                }}
-                message={<span id="message-id">Enter all values!</span>}
+                message={<span id="message-id">Please fill all the fields!</span>}
             />
         </div>
     );

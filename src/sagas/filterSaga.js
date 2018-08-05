@@ -3,8 +3,8 @@ import * as actionTypes from "../constants";
 import * as api from '../services';
 import {
     requestListPropertiesComplete, updatePropertiesTable,
-    requestGeoAutoCompleteDone, requestListPropertiesStart,
-    onLocationChange
+    requestGeoAutoCompleteDone,
+    onLocationChange, onMessageBoxStatusChange
 } from '../actions';
 import objectAssign from 'object-assign';
 
@@ -22,11 +22,15 @@ export function* watchListPropertiesRequest() {
 }
 
 export function* watchChangeTableActionsRequest() {
-    yield takeEvery(actionTypes.HANDLE_CHANGE_TABLE_ACTIONS, requestChangePage);
+    yield takeEvery(actionTypes.HANDLE_CHANGE_TABLE_ACTIONS, requestListProperties);
 }
 
 export function* watchChangeTablePageRequest() {
-    yield takeEvery(actionTypes.HANDLE_CHANGE_TABLE_PAGE_ACTIONS, requestChangePage);
+    yield takeEvery(actionTypes.HANDLE_CHANGE_TABLE_PAGE_ACTIONS, requestListProperties);
+}
+
+export function* watchChangeSortOrderRequest() {
+    yield takeEvery(actionTypes.HANDLE_CHANGE_SORT_ORDER_REQUEST, requestListProperties);
 }
 
 /******************************************************************************/
@@ -67,16 +71,30 @@ function* requestGeoAutoComplete(action) {
     }
 }
 
+function* getSearchParams(filters) {
+    const state = yield select();
+    let requestParams = {
+        'area': state.get('filterBox').get('selectedLocation').get('value'),
+        'min_price': state.get('filterBox').get('minPrice'),
+        'minimum_beds': state.get('filterBox').get('minBeds'),
+        'page_number': state.get('resultTable').get('page'),
+        'page_size': state.get('resultTable').get('rowsPerPage')
+    };
+    const sortBy = state.get('filterBox').get('sortBy').split('-');
+    if (sortBy && sortBy.length == 2) {
+        requestParams.order_by = sortBy[0];
+        requestParams.ordering = sortBy[1];
+    }
+    return objectAssign({}, requestParams, filters);
+}
+
 function* requestListProperties(action) {
     try {
-        const state = yield select();
-        const innerFilter = {
-            order: 'ascending',
-            page_number: state.get('resultTable').get('page'),
-            page_size: state.get('resultTable').get('rowsPerPage')
-        };
-        const filters = objectAssign({}, innerFilter, action.filter);
-        const {response, error} = yield call(() => api.requestProperties(filters));
+        const innerFilters = yield call(() => getSearchParams(action.filter));
+        if (innerFilters.area === "" || innerFilters.min_price === "" || innerFilters.minimum_beds === "") {
+            return yield put(onMessageBoxStatusChange(true));
+        }
+        const {response, error} = yield call(() => api.requestProperties(innerFilters));
         if (error) {
             throw new Error(error);
         } else {
@@ -102,15 +120,4 @@ function* requestListProperties(action) {
     } finally {
         yield put(requestListPropertiesComplete());
     }
-}
-
-function* requestChangePage(action) {
-    const state = yield select();
-    //filterBoxState.location
-    const requestParams = {
-        'area': state.get('filterBox').get('selectedLocation').get('value'),
-        'min_price': state.get('filterBox').get('minPrice'),
-        'minimum_beds': state.get('filterBox').get('minBeds')
-    };
-    yield call(() => requestListProperties(requestListPropertiesStart(requestParams)));
 }

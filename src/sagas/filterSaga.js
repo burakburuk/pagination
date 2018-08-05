@@ -75,13 +75,13 @@ function* getSearchParams(filters) {
     const state = yield select();
     let requestParams = {
         'area': state.get('filterBox').get('selectedLocation').get('value'),
-        'min_price': state.get('filterBox').get('minPrice'),
+        'minimum_price': state.get('filterBox').get('minPrice'),
         'minimum_beds': state.get('filterBox').get('minBeds'),
         'page_number': state.get('resultTable').get('page'),
         'page_size': state.get('resultTable').get('rowsPerPage')
     };
     const sortBy = state.get('filterBox').get('sortBy').split('-');
-    if (sortBy && sortBy.length == 2) {
+    if (sortBy && sortBy.length === 2) {
         requestParams.order_by = sortBy[0];
         requestParams.ordering = sortBy[1];
     }

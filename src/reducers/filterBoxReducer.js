@@ -2,7 +2,7 @@ import * as actionTypes from '../constants';
 import * as utils from './reducerUtilities';
 import * as mutate from "./mutators";
 import initialState from './initialState';
-import {fromJS} from 'immutable';
+import {fromJS, List, Map} from 'immutable';
 
 export default function filterBoxReducer(state = initialState, action) {
     switch (action.type) {
@@ -34,6 +34,21 @@ export default function filterBoxReducer(state = initialState, action) {
             return utils.pipe([mutate.updateSuggestions(fromJS(action.suggestions))], state);
         case actionTypes.ON_LOCATION_FILTER_SET:
             return utils.pipe([mutate.updateSelectedLocation(action.selectedLocation)], state);
+        case actionTypes.CLEAR_FILTERS:
+            return utils.pipe([
+                mutate.updateMinBeds(""),
+                mutate.updateMinBedsError(false),
+                mutate.updateMinPrice(""),
+                mutate.updateMinPriceError(false),
+                mutate.updateMessageBoxOpen(false),
+                mutate.updateIsDisabled(false),
+                mutate.updateLocation(""),
+                mutate.updateSuggestions(List()),
+                mutate.updateSelectedLocation(Map({
+                    label: "",
+                    value: ""
+                }))
+            ], state);
         default :
             return state;
     }

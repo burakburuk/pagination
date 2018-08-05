@@ -2,7 +2,7 @@ import * as actionTypes from '../constants';
 import * as utils from './reducerUtilities';
 import * as mutate from "./mutators";
 import initialState from './initialState';
-import {fromJS} from 'immutable';
+import {fromJS, List} from 'immutable';
 
 export default function resultTableReducer(state = initialState, action) {
     switch (action.type) {
@@ -22,6 +22,14 @@ export default function resultTableReducer(state = initialState, action) {
             return utils.pipe([
                 mutate.updatePage(action.page),
                 mutate.updateIsDisabled(action.isDisabled),
+            ], state);
+        case actionTypes.CLEAR_RESULT_DATA:
+            return utils.pipe([
+                mutate.updateData(List()),
+                mutate.updatePage(0),
+                mutate.updateRowsPerPage(20),
+                mutate.updateAreaName(""),
+                mutate.updateResultCount(0)
             ], state);
         default :
             return state;

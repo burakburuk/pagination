@@ -64,3 +64,11 @@ export const onMessageBoxClose = (isOpen) => ({
     type: actionTypes.ON_MESSAGE_BOX_STATUS_CHANGE,
     isOpen
 });
+
+export const clearFilters = () => ({
+    type: actionTypes.CLEAR_FILTERS,
+});
+
+export const clearResultData = () => ({
+    type: actionTypes.CLEAR_RESULT_DATA,
+});

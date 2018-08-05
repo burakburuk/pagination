@@ -151,7 +151,7 @@ const components = {
 
 class LocationAutoComplete extends React.Component {
     render() {
-        const {classes, error, disabled, label, value, onChange, onSelectionComplete, suggestions} = this.props;
+        const {classes, error, disabled, label, selectedItem, onChange, onSelectionComplete, suggestions} = this.props;
 
         return (
             <div className={classes.root}>
@@ -161,8 +161,16 @@ class LocationAutoComplete extends React.Component {
                         classes={classes}
                         options={suggestions}
                         components={components}
-                        value={value}
-                        onChange={(e) => onSelectionComplete(e)}
+                        value={selectedItem}
+                        onChange={(e) => {
+                            if (!e.value) {
+                                e = {
+                                    label: "",
+                                    value: ""
+                                };
+                            }
+                            return onSelectionComplete(e);
+                        }}
                         onKeyPress={(e) => onChange(e)}
                         placeholder="Search a location"
                     />

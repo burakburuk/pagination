@@ -28,7 +28,7 @@ const FilterBox = (props) => {
     const {
         classes, filterBoxState, onSubmit, onFilterMinBedsFieldChange,
         onFilterMinPriceFieldChange, onLocationChange, onSelectionComplete,
-        onMessageBoxClose
+        onMessageBoxClose, clearFilters
     } = props;
     return (
         <div className={classes.root}>
@@ -39,16 +39,16 @@ const FilterBox = (props) => {
                             error={filterBoxState.get('locationError')}
                             disabled={filterBoxState.get('disabled')}
                             label="Location"
-                            value={filterBoxState.get('location')}
+                            value={filterBoxState.get('selectedLocation').toJS()}
                             suggestions={filterBoxState.get('suggestions').toJS()}
                             onChange={onLocationChange}
                             onSelectionComplete={onSelectionComplete}/>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <TextField fullWidth
                                    error={filterBoxState.get('minPriceError')}
                                    disabled={filterBoxState.get('disabled')}
-                                   label="Minimum Price"
+                                   label="Min Price"
                                    value={filterBoxState.get('minPrice')}
                                    type="number"
                                    margin="normal"
@@ -58,11 +58,11 @@ const FilterBox = (props) => {
                                    })}
                         />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <TextField fullWidth
                                    error={filterBoxState.get('minBedsError')}
                                    disabled={filterBoxState.get('disabled')}
-                                   label="Minimum Beds"
+                                   label="Min Beds"
                                    value={filterBoxState.get('minBeds')}
                                    type="number"
                                    margin="normal"
@@ -72,10 +72,16 @@ const FilterBox = (props) => {
                                    })}
                         />
                     </Grid>
-                    <Grid item xs>
+                    <Grid item xs={2}>
                         <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}
                                 disabled={filterBoxState.get('disabled')}>
                             Submit
+                        </Button>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Button variant="contained" color="secondary" className={classes.button} onClick={clearFilters}
+                                disabled={filterBoxState.get('disabled')}>
+                            Clear
                         </Button>
                     </Grid>
                 </Grid>

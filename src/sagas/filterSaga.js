@@ -54,7 +54,7 @@ function* requestGeoAutoComplete(action) {
             const result = response.suggestions.map(item => {
                 return {
                     label: item.value ? item.value._text : "",
-                    value: item.identifier ? item.identifier._text : ""
+                    value: item.identifier ? item.identifier._text : "",
                 }
             });
 

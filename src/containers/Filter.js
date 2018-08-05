@@ -5,7 +5,8 @@ import FilterBox from '../components/FilterBox';
 import {
     requestListPropertiesStart, onFilterMinPriceFieldChange,
     onFilterMinBedsFieldChange, filterFieldsError, onLocationChange,
-    requestGeoAutoComplete, onSelectionComplete, onMessageBoxClose
+    requestGeoAutoComplete, onSelectionComplete, onMessageBoxClose,
+    clearFilters, clearResultData
 } from '../actions';
 import {Map} from 'immutable';
 
@@ -49,10 +50,18 @@ class Filter extends Component {
 
     onSelectionComplete = (selection) => {
         this.props.onSelectionComplete(Map(selection));
+        if (selection.value === "") {
+            this.props.clearResultData();
+        }
     };
 
     onMessageBoxClose = () => {
         this.props.onMessageBoxClose(false);
+    };
+
+    clearFilters = () => {
+        this.props.clearFilters();
+        this.props.clearResultData();
     };
 
     render() {
@@ -61,7 +70,7 @@ class Filter extends Component {
             <FilterBox filterBoxState={filterBoxState} onSubmit={this.onSubmit}
                        onFilterMinPriceFieldChange={this.onFilterMinPriceFieldChange}
                        onFilterMinBedsFieldChange={this.onFilterMinBedsFieldChange}
-                       onMessageBoxClose={this.onMessageBoxClose}
+                       onMessageBoxClose={this.onMessageBoxClose} clearFilters={this.clearFilters}
                        onLocationChange={this.onLocationChange} onSelectionComplete={this.onSelectionComplete}/>
         );
     }
@@ -80,6 +89,8 @@ const mapDispatchToProps = (dispatch) => ({
     onMessageBoxClose: (isOpen) => dispatch(onMessageBoxClose(isOpen)),
     requestGeoAutoComplete: (event) => dispatch(requestGeoAutoComplete(event)),
     onSelectionComplete: (selection) => dispatch(onSelectionComplete(selection)),
+    clearFilters: () => dispatch(clearFilters()),
+    clearResultData: () => dispatch(clearResultData()),
 });
 
 export default connect(

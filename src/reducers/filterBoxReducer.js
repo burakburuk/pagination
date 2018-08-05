@@ -2,6 +2,7 @@ import * as actionTypes from '../constants';
 import * as utils from './reducerUtilities';
 import * as mutate from "./mutators";
 import initialState from './initialState';
+import {fromJS} from 'immutable';
 
 export default function filterBoxReducer(state = initialState, action) {
     switch (action.type) {
@@ -24,15 +25,15 @@ export default function filterBoxReducer(state = initialState, action) {
             ], state);
         case actionTypes.LIST_PROPERTIES_REQUEST_COMPLETE:
         case actionTypes.HANDLE_LIST_PROPERTIES_REQUEST:
-            return state.set('disabled', action.disabled);
+            return utils.pipe([mutate.updateIsDisabled(action.disabled)], state);
         case actionTypes.ON_MESSAGE_BOX_STATUS_CHANGE:
-            return state.set('messageBoxOpen', action.isOpen);
+            return utils.pipe([mutate.updateMessageBoxOpen(action.isOpen)], state);
         case actionTypes.ON_LOCATION_FILTER_CHANGE:
-            return state.set('location', action.location);
+            return utils.pipe([mutate.updateLocation(action.location)], state);
         case actionTypes.GEO_AUTO_COMPLETE_REQUEST_DONE:
-            return state.set('suggestions', action.suggestions);
+            return utils.pipe([mutate.updateSuggestions(fromJS(action.suggestions))], state);
         case actionTypes.ON_LOCATION_FILTER_SET:
-            return state.set('selectedLocation', action.selectedLocation);
+            return utils.pipe([mutate.updateSelectedLocation(action.selectedLocation)], state);
         default :
             return state;
     }

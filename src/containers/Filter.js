@@ -7,6 +7,7 @@ import {
     onFilterMinBedsFieldChange, filterFieldsError, onLocationChange,
     requestGeoAutoComplete, onSelectionComplete, onMessageBoxClose
 } from '../actions';
+import {Map} from 'immutable';
 
 class Filter extends Component {
     onSubmit = (e) => {
@@ -23,9 +24,9 @@ class Filter extends Component {
             }
         }
         const requestParams = {
-            'area': filterBoxState.location,
-            'min_price': filterBoxState.minPrice,
-            'minimum_beds': filterBoxState.minBeds
+            'area': selectedLocation.value,
+            'min_price': filterBoxState.get('minPrice'),
+            'minimum_beds': filterBoxState.get('minBeds')
         };
         this.props.requestListPropertiesStart(requestParams);
     };
@@ -47,7 +48,7 @@ class Filter extends Component {
     };
 
     onSelectionComplete = (selection) => {
-        this.props.onSelectionComplete(selection);
+        this.props.onSelectionComplete(Map(selection));
     };
 
     onMessageBoxClose = () => {

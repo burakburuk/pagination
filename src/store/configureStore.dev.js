@@ -6,7 +6,7 @@ import {fromJS} from 'immutable'
 
 export default function configureStore(initialState) {
     const logger = createLogger({
-        // ...options
+        collapsed: true,
     });
 
     const sagaMiddleware = createSagaMiddleware();

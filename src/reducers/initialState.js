@@ -1,6 +1,8 @@
+import {List} from 'immutable';
+
 const initialState = {
     filterBox: {
-        suggestions: [],
+        suggestions: List(),
         location: "",
         selectedLocation: {
             label: "",
@@ -16,12 +18,12 @@ const initialState = {
     },
     resultTable: {
         isDisabled: false,
-        data: [],
+        data: List(),
         page: 0,
         rowsPerPage: 20,
         areaName: "",
         resultCount: 0,
-        rowsPerPageOptions: [10, 20, 50]
+        rowsPerPageOptions: List([10, 20, 50])
     }
 };
 

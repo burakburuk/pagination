@@ -68,8 +68,8 @@ function* requestListProperties(action) {
         const state = yield select();
         const innerFilter = {
             order: 'ascending',
-            page_number: state.resultTable.page,
-            page_size: state.resultTable.rowsPerPage
+            page_number: state.get('resultTable').get('page'),
+            page_size: state.get('resultTable').get('rowsPerPage')
         };
         const filters = objectAssign({}, innerFilter, action.filter);
         const {response, error} = yield call(() => api.requestProperties(filters));

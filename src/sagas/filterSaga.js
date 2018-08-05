@@ -71,7 +71,7 @@ function* requestGeoAutoComplete(action) {
     }
 }
 
-function* getSearchParams(filters) {
+export function* getSearchParams(filters = {}) {
     const state = yield select();
     let requestParams = {
         'area': state.get('filterBox').get('selectedLocation').get('value'),
@@ -85,6 +85,8 @@ function* getSearchParams(filters) {
         requestParams.order_by = sortBy[0];
         requestParams.ordering = sortBy[1];
     }
+    console.log(requestParams);
+    console.log(filters);
     return objectAssign({}, requestParams, filters);
 }
 

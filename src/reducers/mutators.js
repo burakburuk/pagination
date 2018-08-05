@@ -6,6 +6,9 @@ export const updateMinPriceError = minPriceError => s => s.set('minPriceError', 
 export const updateMinBeds = minBeds => s => s.set('minBeds', minBeds);
 export const updateMinBedsError = minBedsError => s => s.set('minBedsError', minBedsError);
 
+export const updateLocationError = locationError => s => s.set('locationError', locationError);
+export const updateMessageBoxOpen = messageBoxOpen => s => s.set('messageBoxOpen', messageBoxOpen);
+
 export const updateAreaName = areaName => s => s.set('areaName', areaName);
 export const updateResultCount = resultCount => s => s.set('resultCount', resultCount);
 export const updateData = data => s => s.set('data', data);

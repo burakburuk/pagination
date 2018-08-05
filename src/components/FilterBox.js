@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LocationAutoComplete from './LocationAutoComplete';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const styles = theme => ({
     root: {
@@ -26,7 +27,8 @@ const styles = theme => ({
 const FilterBox = (props) => {
     const {
         classes, filterBoxState, onSubmit, onFilterMinBedsFieldChange,
-        onFilterMinPriceFieldChange, onLocationChange, onSelectionComplete
+        onFilterMinPriceFieldChange, onLocationChange, onSelectionComplete,
+        onMessageBoxClose
     } = props;
     return (
         <div className={classes.root}>
@@ -78,6 +80,15 @@ const FilterBox = (props) => {
                     </Grid>
                 </Grid>
             </form>
+            <Snackbar
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                open={filterBoxState.get('messageBoxOpen')}
+                onClose={() => onMessageBoxClose()}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Enter all values!</span>}
+            />
         </div>
     );
 };
@@ -85,12 +96,16 @@ const FilterBox = (props) => {
 FilterBox.defaultProps = {
     onSubmit: () => {
         throw new Error("onSubmit is not implemented!");
+    },
+    onMessageBoxClose: () => {
+        throw new Error("onMessageBoxClose is not implemented!");
     }
 };
 
 FilterBox.propTypes = {
     classes: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    onMessageBoxClose: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(FilterBox);

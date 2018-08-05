@@ -59,3 +59,8 @@ export const onSelectionComplete = (selectedLocation) => ({
     type: actionTypes.ON_LOCATION_FILTER_SET,
     selectedLocation
 });
+
+export const onMessageBoxClose = (isOpen) => ({
+    type: actionTypes.ON_MESSAGE_BOX_STATUS_CHANGE,
+    isOpen
+});

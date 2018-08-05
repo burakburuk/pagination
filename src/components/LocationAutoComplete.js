@@ -157,6 +157,7 @@ class LocationAutoComplete extends React.Component {
             <div className={classes.root}>
                 <NoSsr>
                     <Select
+                        error={error}
                         classes={classes}
                         options={suggestions}
                         components={components}

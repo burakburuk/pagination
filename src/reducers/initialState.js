@@ -6,6 +6,7 @@ const initialState = {
             label: "",
             value: ""
         },
+        messageBoxOpen: false,
         locationError: false,
         minPrice: "",
         minPriceError: false,

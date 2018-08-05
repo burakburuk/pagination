@@ -5,16 +5,17 @@ import FilterBox from '../components/FilterBox';
 import {
     requestListPropertiesStart, onFilterMinPriceFieldChange,
     onFilterMinBedsFieldChange, filterFieldsError, onLocationChange,
-    requestGeoAutoComplete, onSelectionComplete
+    requestGeoAutoComplete, onSelectionComplete, onMessageBoxClose
 } from '../actions';
 
 class Filter extends Component {
     onSubmit = (e) => {
         const {filterBoxState} = this.props;
+        const selectedLocation = filterBoxState.get('selectedLocation').toJS();
         const errorObj = {
-            "locationError": (filterBoxState.location === ""),
-            "minPriceError": (filterBoxState.minPrice === ""),
-            "minBedsError": (filterBoxState.minBeds === "")
+            "locationError": (selectedLocation.value === ""),
+            "minPriceError": (filterBoxState.get('minPrice') === ""),
+            "minBedsError": (filterBoxState.get('minBeds') === "")
         };
         for (let key in errorObj) {
             if (errorObj[key]) {
@@ -49,12 +50,17 @@ class Filter extends Component {
         this.props.onSelectionComplete(selection);
     };
 
+    onMessageBoxClose = () => {
+        this.props.onMessageBoxClose(false);
+    };
+
     render() {
         const {filterBoxState} = this.props;
         return (
             <FilterBox filterBoxState={filterBoxState} onSubmit={this.onSubmit}
                        onFilterMinPriceFieldChange={this.onFilterMinPriceFieldChange}
                        onFilterMinBedsFieldChange={this.onFilterMinBedsFieldChange}
+                       onMessageBoxClose={this.onMessageBoxClose}
                        onLocationChange={this.onLocationChange} onSelectionComplete={this.onSelectionComplete}/>
         );
     }
@@ -70,6 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
     onFilterMinBedsFieldChange: (field) => dispatch(onFilterMinBedsFieldChange(field)),
     filterFieldsError: (errors) => dispatch(filterFieldsError(errors)),
     onLocationChange: (event) => dispatch(onLocationChange(event)),
+    onMessageBoxClose: (isOpen) => dispatch(onMessageBoxClose(isOpen)),
     requestGeoAutoComplete: (event) => dispatch(requestGeoAutoComplete(event)),
     onSelectionComplete: (selection) => dispatch(onSelectionComplete(selection)),
 });

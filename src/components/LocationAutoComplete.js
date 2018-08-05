@@ -70,6 +70,8 @@ function Control(props) {
         <TextField
             onChange={(e) => props.selectProps.onKeyPress(e)}
             fullWidth
+            error={props.selectProps.error}
+            disabled={props.selectProps.disabled}
             InputProps={{
                 inputComponent,
                 inputProps: {
@@ -151,13 +153,14 @@ const components = {
 
 class LocationAutoComplete extends React.Component {
     render() {
-        const {classes, error, disabled, label, selectedItem, onChange, onSelectionComplete, suggestions} = this.props;
+        const {classes, error, disabled, selectedItem, onChange, onSelectionComplete, suggestions} = this.props;
 
         return (
             <div className={classes.root}>
                 <NoSsr>
                     <Select
                         error={error}
+                        disabled={disabled}
                         classes={classes}
                         options={suggestions}
                         components={components}

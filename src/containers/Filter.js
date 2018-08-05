@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import FilterBox from '../components/FilterBox';
 import {
@@ -49,10 +48,14 @@ class Filter extends Component {
     };
 
     onSelectionComplete = (selection) => {
-        this.props.onSelectionComplete(Map(selection));
+        let locationError = true;
         if (selection.value === "") {
             this.props.clearResultData();
         }
+        else {
+            locationError = false;
+        }
+        this.props.onSelectionComplete(Map(selection), locationError);
     };
 
     onMessageBoxClose = () => {

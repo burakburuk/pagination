@@ -55,9 +55,9 @@ export const onLocationChange = (location) => ({
     location
 });
 
-export const onSelectionComplete = (selectedLocation) => ({
+export const onSelectionComplete = (selectedLocation, locationError) => ({
     type: actionTypes.ON_LOCATION_FILTER_SET,
-    selectedLocation
+    selectedLocation, locationError
 });
 
 export const onMessageBoxStatusChange = (isOpen) => ({

@@ -35,7 +35,10 @@ export default function filterBoxReducer(state = initialState, action) {
         case actionTypes.HANDLE_CHANGE_SORT_ORDER_REQUEST:
             return utils.pipe([mutate.updateSortBy(action.sortBy)], state);
         case actionTypes.ON_LOCATION_FILTER_SET:
-            return utils.pipe([mutate.updateSelectedLocation(action.selectedLocation)], state);
+            return utils.pipe([
+                mutate.updateSelectedLocation(action.selectedLocation),
+                mutate.updateLocationError(action.locationError ? action.locationError : false),
+            ], state);
         case actionTypes.CLEAR_FILTERS:
             return utils.pipe([
                 mutate.updateMinBeds(""),

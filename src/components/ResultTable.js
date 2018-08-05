@@ -10,6 +10,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import ResultTableActions from './ResultTableActions';
+import {format} from 'currency-formatter';
 
 const styles = theme => ({
     root: {
@@ -50,7 +51,7 @@ const ResultTable = (props) => {
                             return (
                                 <TableRow key={n.listingId}>
                                     <TableCell component="th" scope="row">{n.listingId}</TableCell>
-                                    <TableCell numeric>{n.price}</TableCell>
+                                    <TableCell numeric>{format(n.price, {code: 'GBP'})}</TableCell>
                                     <TableCell numeric>{n.bedrooms}</TableCell>
                                     <TableCell>{n.propertyType}</TableCell>
                                     <TableCell>{n.agentName}</TableCell>

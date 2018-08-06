@@ -15,7 +15,7 @@ const initialState = {
         minPriceError: false,
         minBeds: "",
         minBedsError: false,
-        disabled: false
+        isDisabled: false
     },
     resultTable: {
         isDisabled: false,

@@ -56,7 +56,7 @@ const FilterBox = (props) => {
                     <Grid item xs={4}>
                         <LocationAutoComplete
                             error={filterBoxState.get('locationError')}
-                            disabled={filterBoxState.get('disabled')}
+                            disabled={filterBoxState.get('isDisabled')}
                             label="Location"
                             value={filterBoxState.get('selectedLocation').toJS()}
                             suggestions={filterBoxState.get('suggestions').toJS()}
@@ -66,7 +66,7 @@ const FilterBox = (props) => {
                     <Grid item xs={4}>
                         <TextField fullWidth
                                    error={filterBoxState.get('minPriceError')}
-                                   disabled={filterBoxState.get('disabled')}
+                                   disabled={filterBoxState.get('isDisabled')}
                                    label="Min Price"
                                    value={filterBoxState.get('minPrice')}
                                    type="number"
@@ -80,7 +80,7 @@ const FilterBox = (props) => {
                     <Grid item xs={3}>
                         <TextField fullWidth
                                    error={filterBoxState.get('minBedsError')}
-                                   disabled={filterBoxState.get('disabled')}
+                                   disabled={filterBoxState.get('isDisabled')}
                                    label="Min Beds"
                                    value={filterBoxState.get('minBeds')}
                                    type="number"
@@ -93,7 +93,7 @@ const FilterBox = (props) => {
                     </Grid>
                     <Grid item xs={1}>
                         <Button variant="contained" color="primary" className={classes.button} onClick={onSubmit}
-                                disabled={filterBoxState.get('disabled')}>
+                                disabled={filterBoxState.get('isDisabled')}>
                             Submit
                         </Button>
                     </Grid>
@@ -101,7 +101,7 @@ const FilterBox = (props) => {
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="name-readonly">Sort By</InputLabel>
                             <Select
-                                disabled={filterBoxState.get('disabled')}
+                                disabled={filterBoxState.get('isDisabled')}
                                 value={filterBoxState.get('sortBy')}
                                 onChange={(e) => onSortByChange(e)}>
                                 <MenuItem value="">

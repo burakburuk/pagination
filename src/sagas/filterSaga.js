@@ -38,7 +38,7 @@ export function* watchChangeSortOrderRequest() {
 
 /******************************************************************************/
 
-export function* requestGeoAutoComplete(action) {
+function* requestGeoAutoComplete(action) {
     try {
         if (action.searchTerm === "") {
             return yield put(requestGeoAutoCompleteDone([]));
@@ -71,8 +71,7 @@ export function* requestGeoAutoComplete(action) {
     }
 }
 
-export function* getSearchParams(filters = {}) {
-    const state = yield select();
+export function getSearchParams(filters = {}, state) {
     let requestParams = {
         'area': state.get('filterBox').get('selectedLocation').get('value'),
         'minimum_price': state.get('filterBox').get('minPrice'),
@@ -88,9 +87,10 @@ export function* getSearchParams(filters = {}) {
     return objectAssign({}, requestParams, filters);
 }
 
-export function* requestListProperties(action) {
+function* requestListProperties(action) {
     try {
-        const innerFilters = yield call(() => getSearchParams(action.filter));
+        const state = yield select();
+        const innerFilters = getSearchParams(action.filter, state);
         if (innerFilters.area === "" || innerFilters.min_price === "" || innerFilters.minimum_beds === "") {
             return yield put(onMessageBoxStatusChange(true));
         }
